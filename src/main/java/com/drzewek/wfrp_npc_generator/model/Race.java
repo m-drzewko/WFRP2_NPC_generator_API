@@ -10,24 +10,33 @@ public class Race {
     private Long id;
 
     @Column
-    private String description;
+    private String name;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "racestats_id",  referencedColumnName = "id")
+    private RaceStats stats;
 
     public Race() {
     }
 
-    public Race(String description) {
-        this.description = description;
+    public Race(String name, RaceStats stats) {
+        this.name = name;
+        this.stats = stats;
+    }
+
+    public Race(String name) {
+        this.name = name;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 }
