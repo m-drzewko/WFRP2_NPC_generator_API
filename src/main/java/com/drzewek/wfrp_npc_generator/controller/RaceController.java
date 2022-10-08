@@ -14,8 +14,11 @@ import java.util.List;
 @RestController
 public class RaceController {
 
-    @Autowired
-    private RaceService service;
+    private final RaceService service;
+
+    public RaceController(RaceService service) {
+        this.service = service;
+    }
 
     @GetMapping("/races")
     public List<Race> getAllRaces() {

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RaceStatsService {
 
-    RaceStatsRepository repository;
+    private final RaceStatsRepository repository;
 
-    /*public RaceStats saveStats(RaceStatsDto raceStatsDto) {
-        return repository.save(mapStatsFromDto(raceStatsDto));
-    }*/
+    public RaceStatsService(RaceStatsRepository repository) {
+        this.repository = repository;
+    }
 
     public RaceStats mapStatsFromDto (RaceStatsDto statsOfRace) {
         RaceStats mappedStats = new RaceStats(statsOfRace.getBasicWs(), statsOfRace.getBasicBs(), statsOfRace.getBasicStr(),

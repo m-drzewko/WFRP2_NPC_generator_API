@@ -12,11 +12,13 @@ import java.util.List;
 @Service
 public class RaceService {
 
-    @Autowired
-    private RaceRepository raceRepository;
+    private final RaceRepository raceRepository;
+    private final RaceStatsService statsService;
 
-    @Autowired
-    private RaceStatsService statsService;
+    public RaceService(RaceRepository raceRepository, RaceStatsService statsService) {
+        this.raceRepository = raceRepository;
+        this.statsService = statsService;
+    }
 
     public List<Race> getAllRaces() {
         return raceRepository.findAll();
