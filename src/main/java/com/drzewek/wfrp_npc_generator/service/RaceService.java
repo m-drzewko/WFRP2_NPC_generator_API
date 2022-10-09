@@ -25,8 +25,11 @@ public class RaceService {
     }
 
     public Race saveNewRace(RaceStatsDto raceToSave) {
+        return raceRepository.save(mapRaceFromDto(raceToSave));
+    }
+
+    public Race mapRaceFromDto(RaceStatsDto raceToSave) {
         RaceStats stats = statsService.mapStatsFromDto(raceToSave);
-        Race newRace = new Race(raceToSave.getName(), stats);
-        return raceRepository.save(newRace);
+        return new Race(raceToSave.getName(), stats);
     }
 }
