@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class RaceRepositoryTest {
 
-    @Autowired
     private RaceRepository raceRepository;
 
     @Test
@@ -23,5 +22,4 @@ class RaceRepositoryTest {
         assertEquals("testRace", savedRace.getName());
         assertEquals(1, raceRepository.findAll().size());
     }
-
 }
