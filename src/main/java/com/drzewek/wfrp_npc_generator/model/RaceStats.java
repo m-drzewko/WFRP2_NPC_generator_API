@@ -12,10 +12,6 @@ public class RaceStats {
     @JsonIgnore
     private Long id;
 
-    @OneToOne(mappedBy = "stats")
-    @JsonIgnore
-    private Race race;
-
     private int basicWs;
     private int basicBs;
     private int basicStr;
@@ -48,14 +44,6 @@ public class RaceStats {
 
     public Long getId() {
         return id;
-    }
-
-    public Race getRace() {
-        return race;
-    }
-
-    public void setRace(Race race) {
-        this.race = race;
     }
 
     public int getBasicWs() {
