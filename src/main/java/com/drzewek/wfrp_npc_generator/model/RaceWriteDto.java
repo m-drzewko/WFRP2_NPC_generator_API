@@ -1,6 +1,6 @@
 package com.drzewek.wfrp_npc_generator.model;
 
-public class RaceStatsDto {
+public class RaceWriteDto {
 
     private String name;
 
@@ -16,7 +16,7 @@ public class RaceStatsDto {
     private int maxWounds;
     private int movement;
 
-    public RaceStatsDto(String name, int basicWs, int basicBs, int basicStr,
+    public RaceWriteDto(String name, int basicWs, int basicBs, int basicStr,
                         int basicTo, int basicAg, int basicInt, int basicWp,
                         int basicFel, int maxWounds, int movement) {
         this.name = name;

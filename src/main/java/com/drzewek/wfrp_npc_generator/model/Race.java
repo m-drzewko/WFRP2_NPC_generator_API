@@ -15,7 +15,6 @@ public class Race {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "racestats_id",  referencedColumnName = "id")
     private RaceStats stats;
 
     public Race() {
