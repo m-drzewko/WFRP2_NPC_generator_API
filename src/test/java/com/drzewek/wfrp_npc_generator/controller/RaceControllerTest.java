@@ -2,6 +2,7 @@ package com.drzewek.wfrp_npc_generator.controller;
 
 import com.drzewek.wfrp_npc_generator.model.Race;
 import com.drzewek.wfrp_npc_generator.model.RaceStats;
+import com.drzewek.wfrp_npc_generator.model.RaceStatsWriteDto;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ class RaceControllerTest {
     @Autowired
     private RaceController raceController;
 
-    List<Race> testArrayRaces = new ArrayList<>();
+    List<Race> testRaceList = new ArrayList<>();
 
     RaceWriteDto testRaceDto;
 
@@ -36,33 +37,36 @@ class RaceControllerTest {
 
     @BeforeEach
     void setup() {
-        testRaceDto = new RaceWriteDto("testRaceDto", 10, 10,
-                10, 10, 10, 10, 10,
-                10, 12, 4);
+        testRaceDto = new RaceWriteDto("testRaceDto",
+                new RaceStatsWriteDto(10, 10,10,
+                        10, 10, 10, 10,
+                        10, 12, 4));
 
-        testRaceToSave = new Race("testRace", new RaceStats(10, 10, 10,
-                10, 10, 10, 10, 10,
-                12, 4));
+        testRaceToSave = new Race("testRace",
+                new RaceStats(10, 10, 10,
+                        10, 10, 10, 10,
+                        10, 12, 4));
 
-        testRaceToSave2 = new Race("testRace2", new RaceStats(15, 15, 15,
-                15, 15, 15, 15, 15,
-                11, 4));
-        testArrayRaces.add(0, testRaceToSave);
-        testArrayRaces.add(1, testRaceToSave2);
+        testRaceToSave2 = new Race("testRace2",
+                new RaceStats(15, 15, 15,
+                        15, 15, 15, 15,
+                        15, 11, 4));
+        testRaceList.add(0, testRaceToSave);
+        testRaceList.add(1, testRaceToSave2);
     }
 
     @Test
     void shouldReturnListOfRaces() {
         //given
-        Mockito.when(raceService.getAllRaces()).thenReturn(testArrayRaces);
+        Mockito.when(raceService.getAllRaces()).thenReturn(testRaceList);
 
         //when
-        List<Race> returnedArray = raceController.getAllRaces();
+        List<Race> returnedList = raceController.getAllRaces();
 
         //then
-        assertNotNull(returnedArray);
-        assertEquals(2,returnedArray.size());
-        assertEquals(11, returnedArray.get(1).getStats().getMaxWounds());
+        assertNotNull(returnedList);
+        assertEquals(2,returnedList.size());
+        assertEquals(11, returnedList.get(1).getStats().getMaxWounds());
     }
 
     @Test
@@ -78,5 +82,4 @@ class RaceControllerTest {
         assertEquals(10, returnedRace.getStats().getBasicFel());
         assertEquals("testRace", returnedRace.getName());
     }
-
 }
