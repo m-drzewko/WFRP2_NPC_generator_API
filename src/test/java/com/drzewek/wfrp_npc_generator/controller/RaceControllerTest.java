@@ -7,16 +7,18 @@ import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @WebMvcTest(controllers = RaceController.class)
 class RaceControllerTest {
@@ -27,13 +29,13 @@ class RaceControllerTest {
     @Autowired
     private RaceController raceController;
 
-    List<Race> testRaceList = new ArrayList<>();
+    private List<Race> testRaceList;
 
-    RaceWriteDto testRaceDto;
+    private RaceWriteDto testRaceDto;
 
-    Race testRaceToSave;
+    private Race testRaceToSave;
 
-    Race testRaceToSave2;
+    private Race testRaceToSave2;
 
     @BeforeEach
     void setup() {
@@ -51,28 +53,29 @@ class RaceControllerTest {
                 new RaceStats(15, 15, 15,
                         15, 15, 15, 15,
                         15, 11, 4));
-        testRaceList.add(0, testRaceToSave);
-        testRaceList.add(1, testRaceToSave2);
+
+        testRaceList = Stream.of(testRaceToSave, testRaceToSave2)
+                .collect(Collectors.toList());
     }
 
     @Test
     void shouldReturnListOfRaces() {
         //given
-        Mockito.when(raceService.getAllRaces()).thenReturn(testRaceList);
+        when(raceService.getAllRaces()).thenReturn(testRaceList);
 
         //when
-        List<Race> returnedList = raceController.getAllRaces();
+        List<Race> races = raceController.getAllRaces();
 
         //then
-        assertNotNull(returnedList);
-        assertEquals(2,returnedList.size());
-        assertEquals(11, returnedList.get(1).getStats().getMaxWounds());
+        assertNotNull(races);
+        assertEquals(2,races.size());
+        assertEquals(11, races.get(1).getStats().getMaxWounds());
     }
 
     @Test
     void shouldSaveProvidedRaceDto() {
         //given
-        Mockito.when(raceService.saveNewRace(any(RaceWriteDto.class))).thenReturn(testRaceToSave);
+        when(raceService.saveNewRace(any(RaceWriteDto.class))).thenReturn(testRaceToSave);
 
         //when
         Race returnedRace = raceController.submitRace(testRaceDto);

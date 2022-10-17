@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public abstract interface RaceStatsDtoMapper {
+public interface RaceStatsDtoMapper {
 
     RaceStats statsDtoToRaceStats(RaceStatsWriteDto dto);
 
