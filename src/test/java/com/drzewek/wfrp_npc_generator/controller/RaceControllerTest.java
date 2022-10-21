@@ -11,9 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,39 +28,39 @@ class RaceControllerTest {
     @Autowired
     private RaceController raceController;
 
-    private List<Race> testRaceList;
+    private List<Race> raceList;
 
-    private RaceWriteDto testRaceDto;
+    private RaceWriteDto raceWriteDto;
 
-    private Race testRaceToSave;
+    private Race raceToSave;
 
-    private Race testRaceToSave2;
+    private Race raceToSave2;
 
     @BeforeEach
     void setup() {
-        testRaceDto = new RaceWriteDto("testRaceDto",
+        raceWriteDto = new RaceWriteDto("testRaceDto",
                 new RaceStatsWriteDto(10, 10,10,
                         10, 10, 10, 10,
                         10, 12, 4));
 
-        testRaceToSave = new Race("testRace",
+        raceToSave = new Race("testRace",
                 new RaceStats(10, 10, 10,
                         10, 10, 10, 10,
                         10, 12, 4));
 
-        testRaceToSave2 = new Race("testRace2",
+        raceToSave2 = new Race("testRace2",
                 new RaceStats(15, 15, 15,
                         15, 15, 15, 15,
                         15, 11, 4));
 
-        testRaceList = Stream.of(testRaceToSave, testRaceToSave2)
-                .collect(Collectors.toList());
+        raceList = Arrays.asList(raceToSave, raceToSave2);
+
     }
 
     @Test
     void shouldReturnListOfRaces() {
         //given
-        when(raceService.getAllRaces()).thenReturn(testRaceList);
+        when(raceService.getAllRaces()).thenReturn(raceList);
 
         //when
         List<Race> races = raceController.getAllRaces();
@@ -75,14 +74,14 @@ class RaceControllerTest {
     @Test
     void shouldSaveProvidedRaceDto() {
         //given
-        when(raceService.saveNewRace(any(RaceWriteDto.class))).thenReturn(testRaceToSave);
+        when(raceService.saveNewRace(any(RaceWriteDto.class))).thenReturn(raceToSave);
 
         //when
-        Race returnedRace = raceController.submitRace(testRaceDto);
+        Race returnedRace = raceController.submitRace(raceWriteDto);
 
         //then
         assertNotNull(returnedRace);
-        assertEquals(10, returnedRace.getStats().getBasicFel());
+        assertEquals(10, returnedRace.getStats().getBasicFellowship());
         assertEquals("testRace", returnedRace.getName());
     }
 }

@@ -7,7 +7,6 @@ import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,9 +14,9 @@ class RaceStatsDtoMapperTest {
 
     private RaceStatsDtoMapper mapper = Mappers.getMapper(RaceStatsDtoMapper.class);
 
-    private Race testRace;
+    private Race race;
 
-    private RaceStats testStats;
+    private RaceStats stats;
 
     private RaceStatsWriteDto raceStatsDto;
 
@@ -26,11 +25,11 @@ class RaceStatsDtoMapperTest {
 
     @BeforeEach
     void setUp() {
-        testStats = new RaceStats(15, 15, 15, 15,
+        stats = new RaceStats(15, 15, 15, 15,
                 15, 15, 15,
                 15, 12, 4);
 
-        testRace = new Race("testName", testStats);
+        race = new Race("testName", stats);
 
         raceStatsDto = new RaceStatsWriteDto(20, 20, 20,
                 20, 20, 20, 20,
@@ -52,7 +51,7 @@ class RaceStatsDtoMapperTest {
     @Test
     void shouldMapRaceStatsToDto() {
         //given & when
-        RaceStatsWriteDto mappedDto = mapper.raceStatsToDto(testStats);
+        RaceStatsWriteDto mappedDto = mapper.raceStatsToDto(stats);
 
         //then
         assertNotNull(mappedDto);
@@ -73,7 +72,7 @@ class RaceStatsDtoMapperTest {
     @Test
     void shouldMapRaceToRaceDto() {
         //given & when
-        RaceWriteDto mappedDto = mapper.raceToDto(testRace);
+        RaceWriteDto mappedDto = mapper.raceToDto(race);
 
         //then
         assertNotNull(mappedDto);

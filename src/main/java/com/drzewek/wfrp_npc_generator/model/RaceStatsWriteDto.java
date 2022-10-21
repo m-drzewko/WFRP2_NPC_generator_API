@@ -2,103 +2,104 @@ package com.drzewek.wfrp_npc_generator.model;
 
 public class RaceStatsWriteDto {
 
-    private int basicWs;
+    private int basicWeaponSkill;
 
-    private int basicBs;
+    private int basicBallisticSkill;
 
-    private int basicStr;
+    private int basicStrength;
 
-    private int basicTo;
+    private int basicToughness;
 
-    private int basicAg;
+    private int basicAgility;
 
-    private int basicInt;
+    private int basicIntelligence;
 
-    private int basicWp;
+    private int basicWillPower;
 
-    private int basicFel;
+    private int basicFellowship;
 
     private int maxWounds;
 
     private int movement;
 
-    public RaceStatsWriteDto(int basicWs, int basicBs, int basicStr,
-                             int basicTo, int basicAg, int basicInt,
-                             int basicWp, int basicFel, int maxWounds, int movement) {
-        this.basicWs = basicWs;
-        this.basicBs = basicBs;
-        this.basicStr = basicStr;
-        this.basicTo = basicTo;
-        this.basicAg = basicAg;
-        this.basicInt = basicInt;
-        this.basicWp = basicWp;
-        this.basicFel = basicFel;
+    public RaceStatsWriteDto(int basicWeaponSkill, int basicBallisticSkill,
+                             int basicStrength, int basicToughness, int basicAgility,
+                             int basicIntelligence, int basicWillPower, int basicFellowship,
+                             int maxWounds, int movement) {
+        this.basicWeaponSkill = basicWeaponSkill;
+        this.basicBallisticSkill = basicBallisticSkill;
+        this.basicStrength = basicStrength;
+        this.basicToughness = basicToughness;
+        this.basicAgility = basicAgility;
+        this.basicIntelligence = basicIntelligence;
+        this.basicWillPower = basicWillPower;
+        this.basicFellowship = basicFellowship;
         this.maxWounds = maxWounds;
         this.movement = movement;
     }
 
-    public int getBasicWs() {
-        return basicWs;
+    public int getBasicWeaponSkill() {
+        return basicWeaponSkill;
     }
 
-    public void setBasicWs(int basicWs) {
-        this.basicWs = basicWs;
+    public void setBasicWeaponSkill(int basicWeaponSkill) {
+        this.basicWeaponSkill = basicWeaponSkill;
     }
 
-    public int getBasicBs() {
-        return basicBs;
+    public int getBasicBallisticSkill() {
+        return basicBallisticSkill;
     }
 
-    public void setBasicBs(int basicBs) {
-        this.basicBs = basicBs;
+    public void setBasicBallisticSkill(int basicBallisticSkill) {
+        this.basicBallisticSkill = basicBallisticSkill;
     }
 
-    public int getBasicStr() {
-        return basicStr;
+    public int getBasicStrength() {
+        return basicStrength;
     }
 
-    public void setBasicStr(int basicStr) {
-        this.basicStr = basicStr;
+    public void setBasicStrength(int basicStrength) {
+        this.basicStrength = basicStrength;
     }
 
-    public int getBasicTo() {
-        return basicTo;
+    public int getBasicToughness() {
+        return basicToughness;
     }
 
-    public void setBasicTo(int basicTo) {
-        this.basicTo = basicTo;
+    public void setBasicToughness(int basicToughness) {
+        this.basicToughness = basicToughness;
     }
 
-    public int getBasicAg() {
-        return basicAg;
+    public int getBasicAgility() {
+        return basicAgility;
     }
 
-    public void setBasicAg(int basicAg) {
-        this.basicAg = basicAg;
+    public void setBasicAgility(int basicAgility) {
+        this.basicAgility = basicAgility;
     }
 
-    public int getBasicInt() {
-        return basicInt;
+    public int getBasicIntelligence() {
+        return basicIntelligence;
     }
 
-    public void setBasicInt(int basicInt) {
-        this.basicInt = basicInt;
+    public void setBasicIntelligence(int basicIntelligence) {
+        this.basicIntelligence = basicIntelligence;
     }
 
-    public int getBasicWp() {
-        return basicWp;
+    public int getBasicWillPower() {
+        return basicWillPower;
     }
 
-    public void setBasicWp(int basicWp) {
-        this.basicWp = basicWp;
+    public void setBasicWillPower(int basicWillPower) {
+        this.basicWillPower = basicWillPower;
     }
 
-    public int getBasicFel() {
-        return basicFel;
+    public int getBasicFellowship() {
+        return basicFellowship;
     }
 
-    public void setBasicFel(int basicFel) {
-        this.basicFel = basicFel;
+    public void setBasicFellowship(int basicFellowship) {
+        this.basicFellowship = basicFellowship;
     }
 
     public int getMaxWounds() {
