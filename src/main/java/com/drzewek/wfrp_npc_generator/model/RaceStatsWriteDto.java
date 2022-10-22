@@ -1,16 +1,6 @@
 package com.drzewek.wfrp_npc_generator.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-
-@Entity
-public class RaceStats {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    private Long id;
+public class RaceStatsWriteDto {
 
     private int basicWeaponSkill;
 
@@ -32,9 +22,10 @@ public class RaceStats {
 
     private int movement;
 
-    public RaceStats(int basicWeaponSkill, int basicBallisticSkill, int basicStrength, int basicToughness,
-                     int basicAgility, int basicIntelligence, int basicWillPower, int basicFellowship,
-                     int maxWounds, int movement) {
+    public RaceStatsWriteDto(int basicWeaponSkill, int basicBallisticSkill,
+                             int basicStrength, int basicToughness, int basicAgility,
+                             int basicIntelligence, int basicWillPower, int basicFellowship,
+                             int maxWounds, int movement) {
         this.basicWeaponSkill = basicWeaponSkill;
         this.basicBallisticSkill = basicBallisticSkill;
         this.basicStrength = basicStrength;
@@ -47,11 +38,7 @@ public class RaceStats {
         this.movement = movement;
     }
 
-    public RaceStats() {
-    }
-
-    public Long getId() {
-        return id;
+    public RaceStatsWriteDto() {
     }
 
     public int getBasicWeaponSkill() {

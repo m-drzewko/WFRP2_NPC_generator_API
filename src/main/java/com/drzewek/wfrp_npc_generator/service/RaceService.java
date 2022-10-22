@@ -1,8 +1,8 @@
 package com.drzewek.wfrp_npc_generator.service;
 
+import com.drzewek.wfrp_npc_generator.mapper.RaceStatsDtoMapper;
 import com.drzewek.wfrp_npc_generator.model.Race;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
-import com.drzewek.wfrp_npc_generator.model.RaceStats;
 import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +12,12 @@ import java.util.List;
 public class RaceService {
 
     private final RaceRepository raceRepository;
-    private final RaceStatsService statsService;
 
-    public RaceService(RaceRepository raceRepository, RaceStatsService statsService) {
+    private final RaceStatsDtoMapper mapper;
+
+    public RaceService(RaceRepository raceRepository, RaceStatsDtoMapper mapper) {
         this.raceRepository = raceRepository;
-        this.statsService = statsService;
+        this.mapper = mapper;
     }
 
     public List<Race> getAllRaces() {
@@ -24,11 +25,6 @@ public class RaceService {
     }
 
     public Race saveNewRace(RaceWriteDto raceToSave) {
-        return raceRepository.save(mapRaceFromDto(raceToSave));
-    }
-
-    public Race mapRaceFromDto(RaceWriteDto raceToSave) {
-        RaceStats stats = statsService.mapStatsFromDto(raceToSave);
-        return new Race(raceToSave.getName(), stats);
+        return raceRepository.save(mapper.dtoToRace(raceToSave));
     }
 }

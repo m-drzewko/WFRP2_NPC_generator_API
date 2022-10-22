@@ -1,9 +1,12 @@
 package com.drzewek.wfrp_npc_generator.service;
 
+import com.drzewek.wfrp_npc_generator.mapper.RaceStatsDtoMapper;
 import com.drzewek.wfrp_npc_generator.model.Race;
 import com.drzewek.wfrp_npc_generator.model.RaceStats;
+import com.drzewek.wfrp_npc_generator.model.RaceStatsWriteDto;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,50 +25,37 @@ class RaceServiceTest {
     private RaceRepository raceRepository;
 
     @Mock
-    private RaceStatsService raceStatsService;
+    private RaceStatsDtoMapper mapper;
 
     @InjectMocks
     private RaceService raceService;
 
-    @Test
-    void shouldSaveNewRaceFromDto() {
-        //given
-        RaceWriteDto testRaceDto = new RaceWriteDto("testRaceDto", 10, 10,
-                10, 10, 10, 10, 10,
-                10, 12, 4);
+    private Race race;
 
-        Race testRace = new Race("testRace", new RaceStats(10, 10, 10,
+    private RaceWriteDto raceDto;
+
+    @BeforeEach
+    void setup() {
+        race = new Race("testRace", new RaceStats(10, 10, 10,
                 10, 10, 10, 10, 10,
                 12, 4));
 
-        when(raceRepository.save(any(Race.class))).thenReturn(testRace);
+        raceDto = new RaceWriteDto("testRaceDto", new RaceStatsWriteDto(10, 10,
+                10, 10, 10, 10, 10,
+                10, 12, 4));
+    }
+
+    @Test
+    void shouldSaveNewRaceFromDto() {
+        //given
+        when(mapper.dtoToRace(any(RaceWriteDto.class))).thenReturn(race);
+        when(raceRepository.save(any(Race.class))).thenReturn(race);
 
         //when
-        Race savedRace = raceService.saveNewRace(testRaceDto);
+        Race savedRace = raceService.saveNewRace(raceDto);
 
         //then
         assertNotNull(savedRace);
         assertEquals("testRace", savedRace.getName());
-    }
-
-    @Test
-    void shouldMapToRaceFromDto() {
-        //given
-        RaceWriteDto testRaceDto = new RaceWriteDto("testRaceDto", 10, 10,
-                10, 10, 10, 10, 10,
-                10, 12, 4);
-
-        RaceStats testStats = new RaceStats(10, 10, 10,
-                10, 10, 10, 10, 10,
-                12, 4);
-
-        when(raceStatsService.mapStatsFromDto(any(RaceWriteDto.class))).thenReturn(testStats);
-
-        //when
-        Race mappedRace = raceService.mapRaceFromDto(testRaceDto);
-
-        //then
-        assertNotNull(mappedRace);
-        assertEquals(4, mappedRace.getStats().getMovement());
     }
 }
