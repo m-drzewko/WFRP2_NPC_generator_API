@@ -11,6 +11,9 @@ public class RaceWriteDto {
         this.statsDto = statsDto;
     }
 
+    public RaceWriteDto() {
+    }
+
     public String getName() {
         return name;
     }

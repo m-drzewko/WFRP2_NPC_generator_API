@@ -38,6 +38,9 @@ public class RaceStatsWriteDto {
         this.movement = movement;
     }
 
+    public RaceStatsWriteDto() {
+    }
+
     public int getBasicWeaponSkill() {
         return basicWeaponSkill;
     }
