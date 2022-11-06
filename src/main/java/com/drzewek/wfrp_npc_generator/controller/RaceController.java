@@ -31,6 +31,11 @@ public class RaceController {
         return service.getAllRaces();
     }
 
+    @Operation(summary = "Saves new race based on provided DTO")
+    @ApiResponse(responseCode = "200",
+        description = "Saved new race to repository",
+        content = { @Content(mediaType = "application/json",
+            schema = @Schema(implementation = Race.class))})
     @PostMapping("/races/new")
     public Race submitRace(@RequestBody RaceWriteDto newRace) {
         return service.saveNewRace(newRace);
