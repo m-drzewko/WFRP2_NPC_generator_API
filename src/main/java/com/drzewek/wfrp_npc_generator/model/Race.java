@@ -1,6 +1,7 @@
 package com.drzewek.wfrp_npc_generator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 
@@ -12,9 +13,11 @@ public class Race {
     private Long id;
 
     @Column
+    @Schema(description = "name of the race")
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @Schema(description = "basic statistics associated with the race")
     private RaceStats stats;
 
     public Race() {
