@@ -1,6 +1,7 @@
 package com.drzewek.wfrp_npc_generator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 
@@ -12,24 +13,34 @@ public class RaceStats {
     @JsonIgnore
     private Long id;
 
+    @Schema(description = "basic weapon skill of a generated character")
     private int basicWeaponSkill;
 
+    @Schema(description = "basic ballistic skill of a generated character")
     private int basicBallisticSkill;
 
+    @Schema(description = "basic strength of a generated character")
     private int basicStrength;
 
+    @Schema(description = "basic thoughness of a generated character")
     private int basicToughness;
 
+    @Schema(description = "basic agility of a generated character")
     private int basicAgility;
 
+    @Schema(description = "basic intelligence of a generated character")
     private int basicIntelligence;
 
+    @Schema(description = "basic will power of a generated character")
     private int basicWillPower;
 
+    @Schema(description = "basic fellowship of a generated character")
     private int basicFellowship;
 
+    @Schema(description = "maximum wounds the character can have after generation")
     private int maxWounds;
 
+    @Schema(description = "character's movement speed")
     private int movement;
 
     public RaceStats(int basicWeaponSkill, int basicBallisticSkill, int basicStrength, int basicToughness,

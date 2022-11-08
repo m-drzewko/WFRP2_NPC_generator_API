@@ -4,6 +4,7 @@ import com.drzewek.wfrp_npc_generator.model.Race;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +26,7 @@ public class RaceController {
     @ApiResponse(responseCode = "200",
         description = "Returned all races",
         content = { @Content(mediaType = "application/json",
-            schema = @Schema(implementation = List.class)) })
+            array = @ArraySchema(schema = @Schema(implementation = Race.class))) })
     @GetMapping("/races")
     public List<Race> getAllRaces() {
         return service.getAllRaces();
