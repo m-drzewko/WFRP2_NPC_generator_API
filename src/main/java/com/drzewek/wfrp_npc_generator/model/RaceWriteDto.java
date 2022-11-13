@@ -4,11 +4,11 @@ public class RaceWriteDto {
 
     private String name;
 
-    private RaceStatsWriteDto statsDto;
+    private RaceStatsWriteDto stats;
 
-    public RaceWriteDto(String name, RaceStatsWriteDto statsDto) {
+    public RaceWriteDto(String name, RaceStatsWriteDto stats) {
         this.name = name;
-        this.statsDto = statsDto;
+        this.stats = stats;
     }
 
     public RaceWriteDto() {
@@ -22,11 +22,11 @@ public class RaceWriteDto {
         this.name = name;
     }
 
-    public RaceStatsWriteDto getStatsDto() {
-        return statsDto;
+    public RaceStatsWriteDto getStats() {
+        return stats;
     }
 
-    public void setStatsDto(RaceStatsWriteDto statsDto) {
-        this.statsDto = statsDto;
+    public void setStats(RaceStatsWriteDto stats) {
+        this.stats = stats;
     }
 }

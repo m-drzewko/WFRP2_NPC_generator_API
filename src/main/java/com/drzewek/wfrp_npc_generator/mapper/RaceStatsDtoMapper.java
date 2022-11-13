@@ -14,10 +14,10 @@ public interface RaceStatsDtoMapper {
 
     RaceStatsWriteDto raceStatsToDto(RaceStats entity);
 
-    @Mapping(target = "stats", source = "statsDto")
+    @Mapping(target = "stats", source = "stats")
     Race dtoToRace(RaceWriteDto dto);
 
-    @Mapping(target = "statsDto", source = "stats")
+    @Mapping(target = "stats", source = "stats")
     RaceWriteDto raceToDto(Race entity);
 
 }
