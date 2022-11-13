@@ -76,7 +76,7 @@ class RaceStatsDtoMapperTest {
 
         //then
         assertNotNull(mappedDto);
-        assertNotNull(mappedDto.getStatsDto());
+        assertNotNull(mappedDto.getStats());
         assertEquals("testName", mappedDto.getName());
     }
 }
