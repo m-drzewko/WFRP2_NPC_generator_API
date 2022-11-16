@@ -1,2 +1,2 @@
 # WFRP2-npc-generator
-NPC generator for Warhammer Fantasy RolePlay 2ed
+This is a back-end NPC generator for Warhammer Fantasy Roleplay 2nd edition.
