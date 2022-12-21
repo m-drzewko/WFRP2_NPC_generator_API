@@ -4,6 +4,7 @@ import com.drzewek.wfrp_npc_generator.mapper.RaceStatsDtoMapper;
 import com.drzewek.wfrp_npc_generator.model.Race;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class RaceService {
-
-    Logger logger = LoggerFactory.logger(RaceService.class);
 
     private final RaceRepository raceRepository;
 
@@ -25,12 +25,12 @@ public class RaceService {
     }
 
     public List<Race> getAllRaces() {
-        logger.trace("Returning all races");
+        log.trace("Returning all races");
         return raceRepository.findAll();
     }
 
     public Race saveNewRace(RaceWriteDto raceToSave) {
-        logger.trace("Saving new race: " + raceToSave.getName());
+        log.trace("Saving new race: " + raceToSave.getName());
         return raceRepository.save(mapper.dtoToRace(raceToSave));
     }
 }
