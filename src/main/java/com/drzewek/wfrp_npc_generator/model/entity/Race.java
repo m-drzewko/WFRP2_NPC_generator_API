@@ -1,28 +1,50 @@
-package com.drzewek.wfrp_npc_generator.model;
+package com.drzewek.wfrp_npc_generator.model.entity;
 
-public class RaceWriteDto {
+import io.swagger.v3.oas.annotations.media.Schema;
 
+import javax.persistence.*;
+
+@Entity
+public class Race {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Schema(description = "name of the race")
     private String name;
 
-    private RaceStatsWriteDto stats;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Schema(description = "basic statistics associated with the race")
+    private RaceStats stats;
 
+    @Schema(description = "array of possible hair colors for each race")
     private String[] hairColors;
 
+    @Schema(description = "array of possible eye colors for each race")
     private String[] eyeColors;
 
+    @Schema(description = "minimum age a generated NPC of a race can be")
     private int minimumAge;
 
+    @Schema(description = "maximum age a generated NPC of a race can be")
     private int maximumAge;
 
+    @Schema(description = "base height for a generated male NPC of a race")
     private int baseHeight;
 
+    @Schema(description = "minimum weight a generated NPC of a race can be")
     private int minimumWeight;
 
+    @Schema(description = "maximum weight a generated NPC of a race can be")
     private int maximumWeight;
 
-    public RaceWriteDto(String name, RaceStatsWriteDto stats, String[] hairColors,
-                        String[] eyeColors, int minimumAge, int maximumAge, int baseHeight,
-                        int minimumWeight, int maximumWeight) {
+    public Race() {
+    }
+
+    public Race(String name, RaceStats stats, String[] hairColors,
+                String[] eyeColors, int minimumAge, int maximumAge,
+                int baseHeight, int minimumWeight, int maximumWeight) {
         this.name = name;
         this.stats = stats;
         this.hairColors = hairColors;
@@ -34,7 +56,12 @@ public class RaceWriteDto {
         this.maximumWeight = maximumWeight;
     }
 
-    public RaceWriteDto() {
+    public Race(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -45,11 +72,11 @@ public class RaceWriteDto {
         this.name = name;
     }
 
-    public RaceStatsWriteDto getStats() {
+    public RaceStats getStats() {
         return stats;
     }
 
-    public void setStats(RaceStatsWriteDto stats) {
+    public void setStats(RaceStats stats) {
         this.stats = stats;
     }
 

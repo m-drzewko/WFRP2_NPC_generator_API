@@ -1,6 +1,6 @@
 package com.drzewek.wfrp_npc_generator.repository;
 
-import com.drzewek.wfrp_npc_generator.model.Race;
+import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

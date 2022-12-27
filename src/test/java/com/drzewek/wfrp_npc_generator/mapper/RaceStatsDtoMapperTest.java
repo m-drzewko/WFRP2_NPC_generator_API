@@ -1,7 +1,7 @@
 package com.drzewek.wfrp_npc_generator.mapper;
 
-import com.drzewek.wfrp_npc_generator.model.Race;
-import com.drzewek.wfrp_npc_generator.model.RaceStats;
+import com.drzewek.wfrp_npc_generator.model.entity.Race;
+import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
 import com.drzewek.wfrp_npc_generator.model.RaceStatsWriteDto;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,13 +29,18 @@ class RaceStatsDtoMapperTest {
                 15, 15, 15,
                 15, 12, 4);
 
-        race = new Race("testName", stats);
+        race = new Race("testName", stats,
+                new String[]{"Dark Brown", "Black"},
+                new String[]{"Purple", "Black"},
+                30, 125, 170, 40, 95);
 
         raceStatsDto = new RaceStatsWriteDto(20, 20, 20,
                 20, 20, 20, 20,
                 20, 13, 5);
 
-        raceDto = new RaceWriteDto("testDto", raceStatsDto);
+        raceDto = new RaceWriteDto("testDto", raceStatsDto, new String[]{"Dark Brown", "Black"},
+                new String[]{"Purple", "Black"},
+                30, 125, 170, 40, 95);
     }
 
     @Test
