@@ -42,23 +42,23 @@ class RaceControllerTest {
                 new RaceStatsWriteDto(10, 10,10,
                         10, 10, 10, 10,
                         10, 12, 4),
-                new String[]{"Silver", "Ash Blond"}, new String[]{"Grey Blue", "Blue"},
+                List.of("Silver", "Ash Blond"), List.of("Grey Blue", "Blue"),
                 30, 125, 170, 40, 95);
 
         raceToSave = new Race("testRace",
                 new RaceStats(10, 10, 10,
                         10, 10, 10, 10,
                         10, 12, 4),
-                new String[]{"Corn", "Yellow"},
-                new String[]{"Green", "Copper"},
+                List.of("Corn", "Yellow"),
+                List.of("Green", "Copper"),
                 30, 125, 170, 40, 95);
 
         raceToSave2 = new Race("testRace2",
                 new RaceStats(15, 15, 15,
                         15, 15, 15, 15,
                         15, 11, 4),
-                new String[]{"Copper", "Light Brown"},
-                new String[]{"Light Brown", "Brown"},
+                List.of("Copper", "Light Brown"),
+                List.of("Light Brown", "Brown"),
                 30, 125, 170, 40, 95);
 
         raceList = Arrays.asList(raceToSave, raceToSave2);

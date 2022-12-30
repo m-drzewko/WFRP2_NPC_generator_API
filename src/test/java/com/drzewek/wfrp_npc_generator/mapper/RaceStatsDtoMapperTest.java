@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RaceStatsDtoMapperTest {
@@ -30,16 +32,16 @@ class RaceStatsDtoMapperTest {
                 15, 12, 4);
 
         race = new Race("testName", stats,
-                new String[]{"Dark Brown", "Black"},
-                new String[]{"Purple", "Black"},
+                List.of("Dark Brown", "Black"),
+                List.of("Purple", "Black"),
                 30, 125, 170, 40, 95);
 
         raceStatsDto = new RaceStatsWriteDto(20, 20, 20,
                 20, 20, 20, 20,
                 20, 13, 5);
 
-        raceDto = new RaceWriteDto("testDto", raceStatsDto, new String[]{"Dark Brown", "Black"},
-                new String[]{"Purple", "Black"},
+        raceDto = new RaceWriteDto("testDto", raceStatsDto, List.of("Dark Brown", "Black"),
+                List.of("Purple", "Black"),
                 30, 125, 170, 40, 95);
     }
 
