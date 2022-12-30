@@ -3,6 +3,8 @@ package com.drzewek.wfrp_npc_generator.model.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Race {
@@ -18,11 +20,13 @@ public class Race {
     @Schema(description = "basic statistics associated with the race")
     private RaceStats stats;
 
-    @Schema(description = "array of possible hair colors for each race")
-    private String[] hairColors;
+    @ElementCollection
+    @Schema(description = "list of possible hair colors for each race")
+    private List<String> hairColors = new ArrayList<>();
 
-    @Schema(description = "array of possible eye colors for each race")
-    private String[] eyeColors;
+    @ElementCollection
+    @Schema(description = "list of possible eye colors for each race")
+    private List<String> eyeColors = new ArrayList<>();
 
     @Schema(description = "minimum age a generated NPC of a race can be")
     private int minimumAge;
@@ -42,8 +46,8 @@ public class Race {
     public Race() {
     }
 
-    public Race(String name, RaceStats stats, String[] hairColors,
-                String[] eyeColors, int minimumAge, int maximumAge,
+    public Race(String name, RaceStats stats, List<String> hairColors,
+                List<String> eyeColors, int minimumAge, int maximumAge,
                 int baseHeight, int minimumWeight, int maximumWeight) {
         this.name = name;
         this.stats = stats;
@@ -80,19 +84,19 @@ public class Race {
         this.stats = stats;
     }
 
-    public String[] getHairColors() {
+    public List<String> getHairColors() {
         return hairColors;
     }
 
-    public void setHairColors(String[] hairColors) {
+    public void setHairColors(List<String> hairColors) {
         this.hairColors = hairColors;
     }
 
-    public String[] getEyeColors() {
+    public List<String> getEyeColors() {
         return eyeColors;
     }
 
-    public void setEyeColors(String[] eyeColors) {
+    public void setEyeColors(List<String> eyeColors) {
         this.eyeColors = eyeColors;
     }
 

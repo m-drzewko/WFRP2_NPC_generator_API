@@ -1,14 +1,16 @@
 package com.drzewek.wfrp_npc_generator.model;
 
+import java.util.List;
+
 public class RaceWriteDto {
 
     private String name;
 
     private RaceStatsWriteDto stats;
 
-    private String[] hairColors;
+    private List<String> hairColors;
 
-    private String[] eyeColors;
+    private List<String> eyeColors;
 
     private int minimumAge;
 
@@ -20,9 +22,9 @@ public class RaceWriteDto {
 
     private int maximumWeight;
 
-    public RaceWriteDto(String name, RaceStatsWriteDto stats, String[] hairColors,
-                        String[] eyeColors, int minimumAge, int maximumAge, int baseHeight,
-                        int minimumWeight, int maximumWeight) {
+    public RaceWriteDto(String name, RaceStatsWriteDto stats, List<String> hairColors,
+                        List<String> eyeColors, int minimumAge, int maximumAge,
+                        int baseHeight, int minimumWeight, int maximumWeight) {
         this.name = name;
         this.stats = stats;
         this.hairColors = hairColors;
@@ -53,19 +55,19 @@ public class RaceWriteDto {
         this.stats = stats;
     }
 
-    public String[] getHairColors() {
+    public List<String> getHairColors() {
         return hairColors;
     }
 
-    public void setHairColors(String[] hairColors) {
+    public void setHairColors(List<String> hairColors) {
         this.hairColors = hairColors;
     }
 
-    public String[] getEyeColors() {
+    public List<String> getEyeColors() {
         return eyeColors;
     }
 
-    public void setEyeColors(String[] eyeColors) {
+    public void setEyeColors(List<String> eyeColors) {
         this.eyeColors = eyeColors;
     }
 
