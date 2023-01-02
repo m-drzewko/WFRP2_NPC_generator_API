@@ -19,13 +19,10 @@ public class NpcService {
     private final RaceRepository raceRepository;
     private final NpcRepository npcRepository;
 
-    private final NpcUtility npcUtility;
-
     public NpcService(RaceRepository raceRepository,
-                      NpcRepository npcRepository, NpcUtility npcUtility) {
+                      NpcRepository npcRepository) {
         this.raceRepository = raceRepository;
         this.npcRepository = npcRepository;
-        this.npcUtility = npcUtility;
     }
 
     public Npc generateNpc(String raceName) {
@@ -37,7 +34,7 @@ public class NpcService {
             throw new EntityNotFoundException("Race " + raceName + " does not exist!");
         }
 
-        Npc generatedNpc = npcUtility.generateNpc(raceToAssign);
+        Npc generatedNpc = NpcUtility.generateNpc(raceToAssign);
 
         return generatedNpc;
     }

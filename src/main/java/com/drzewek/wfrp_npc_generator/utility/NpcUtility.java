@@ -10,7 +10,10 @@ import java.util.HashMap;
 @Component
 public class NpcUtility {
 
-    public Npc generateNpc(Race race) {
+    private NpcUtility() {
+    }
+
+    public static Npc generateNpc(Race race) {
 
         Npc npc = new Npc();
 

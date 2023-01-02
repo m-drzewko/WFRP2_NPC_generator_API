@@ -8,6 +8,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Generator {
 
+    private Generator() {
+    }
+
     public static int generate2d10() {
         Random random = new Random();
         return random.ints(2, 21)
