@@ -1,8 +1,8 @@
 package com.drzewek.wfrp_npc_generator.service;
 
 import com.drzewek.wfrp_npc_generator.mapper.RaceStatsDtoMapper;
-import com.drzewek.wfrp_npc_generator.model.Race;
-import com.drzewek.wfrp_npc_generator.model.RaceStats;
+import com.drzewek.wfrp_npc_generator.model.entity.Race;
+import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
 import com.drzewek.wfrp_npc_generator.model.RaceStatsWriteDto;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
@@ -12,11 +12,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 class RaceServiceTest {
@@ -38,11 +38,19 @@ class RaceServiceTest {
     void setup() {
         race = new Race("testRace", new RaceStats(10, 10, 10,
                 10, 10, 10, 10, 10,
-                12, 4));
+                12, 4), List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
+                "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"),
+                List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
+                        "Brown", "Dark Brown", "Silver", "Purple", "Black"),
+                30, 125, 170, 40, 95);
 
         raceDto = new RaceWriteDto("testRaceDto", new RaceStatsWriteDto(10, 10,
                 10, 10, 10, 10, 10,
-                10, 12, 4));
+                10, 12, 4), List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
+                "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"),
+                List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
+                        "Brown", "Dark Brown", "Silver", "Purple", "Black"),
+                30, 125, 170, 40, 95);
     }
 
     @Test

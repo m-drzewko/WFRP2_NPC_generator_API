@@ -1,6 +1,6 @@
 package com.drzewek.wfrp_npc_generator.controller;
 
-import com.drzewek.wfrp_npc_generator.model.Race;
+import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import io.swagger.v3.oas.annotations.Operation;
