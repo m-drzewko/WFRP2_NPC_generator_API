@@ -7,9 +7,7 @@ import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class RaceStatsDtoMapperTest {

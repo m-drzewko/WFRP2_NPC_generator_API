@@ -3,19 +3,16 @@ package com.drzewek.wfrp_npc_generator.utility;
 import com.drzewek.wfrp_npc_generator.model.RaceStatsWriteDto;
 import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class DatabaseUtility {
 
     private final RaceService raceService;
-
-    public DatabaseUtility(RaceService raceService) {
-        this.raceService = raceService;
-    }
 
     @PostConstruct
     public void initializeRaceDatabase() {

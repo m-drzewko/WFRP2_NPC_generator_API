@@ -1,15 +1,14 @@
 package com.drzewek.wfrp_npc_generator.utility;
 
 import com.drzewek.wfrp_npc_generator.model.Gender;
-
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Generator {
-
-    private Generator() {
-    }
 
     public static int generate2d10() {
         Random random = new Random();

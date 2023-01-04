@@ -1,5 +1,14 @@
 package com.drzewek.wfrp_npc_generator.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class NpcDto {
 
     private String name;

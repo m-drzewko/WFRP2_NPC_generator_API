@@ -3,15 +3,14 @@ package com.drzewek.wfrp_npc_generator.utility;
 import com.drzewek.wfrp_npc_generator.model.Gender;
 import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NpcUtility {
-
-    private NpcUtility() {
-    }
 
     public static Npc generateNpc(Race race) {
 
