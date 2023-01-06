@@ -8,19 +8,16 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@RequiredArgsConstructor
 public class RaceController {
 
     private final RaceService service;
-
-    public RaceController(RaceService service) {
-        this.service = service;
-    }
 
     @Operation(summary = "Returns all races")
     @ApiResponse(responseCode = "200",

@@ -2,10 +2,15 @@ package com.drzewek.wfrp_npc_generator.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RaceStats {
 
     @Id
@@ -55,93 +60,6 @@ public class RaceStats {
         this.basicWillPower = basicWillPower;
         this.basicFellowship = basicFellowship;
         this.maxWounds = maxWounds;
-        this.movement = movement;
-    }
-
-    public RaceStats() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public int getBasicWeaponSkill() {
-        return basicWeaponSkill;
-    }
-
-    public void setBasicWeaponSkill(int basicWeaponSkill) {
-        this.basicWeaponSkill = basicWeaponSkill;
-    }
-
-    public int getBasicBallisticSkill() {
-        return basicBallisticSkill;
-    }
-
-    public void setBasicBallisticSkill(int basicBallisticSkill) {
-        this.basicBallisticSkill = basicBallisticSkill;
-    }
-
-    public int getBasicStrength() {
-        return basicStrength;
-    }
-
-    public void setBasicStrength(int basicStrength) {
-        this.basicStrength = basicStrength;
-    }
-
-    public int getBasicToughness() {
-        return basicToughness;
-    }
-
-    public void setBasicToughness(int basicToughness) {
-        this.basicToughness = basicToughness;
-    }
-
-    public int getBasicAgility() {
-        return basicAgility;
-    }
-
-    public void setBasicAgility(int basicAgility) {
-        this.basicAgility = basicAgility;
-    }
-
-    public int getBasicIntelligence() {
-        return basicIntelligence;
-    }
-
-    public void setBasicIntelligence(int basicIntelligence) {
-        this.basicIntelligence = basicIntelligence;
-    }
-
-    public int getBasicWillPower() {
-        return basicWillPower;
-    }
-
-    public void setBasicWillPower(int basicWillPower) {
-        this.basicWillPower = basicWillPower;
-    }
-
-    public int getBasicFellowship() {
-        return basicFellowship;
-    }
-
-    public void setBasicFellowship(int basicFellowship) {
-        this.basicFellowship = basicFellowship;
-    }
-
-    public int getMaxWounds() {
-        return maxWounds;
-    }
-
-    public void setMaxWounds(int maxWounds) {
-        this.maxWounds = maxWounds;
-    }
-
-    public int getMovement() {
-        return movement;
-    }
-
-    public void setMovement(int movement) {
         this.movement = movement;
     }
 }
