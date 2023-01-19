@@ -7,7 +7,7 @@ import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface RaceStatsDtoMapper {
 
     RaceStats statsDtoToRaceStats(RaceStatsWriteDto dto);
