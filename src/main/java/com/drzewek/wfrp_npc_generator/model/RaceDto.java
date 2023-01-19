@@ -10,11 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RaceWriteDto {
+public class RaceDto {
 
     private String name;
 
-    private RaceStatsWriteDto stats;
+    private RaceStatsDto stats;
 
     private List<String> hairColors;
 

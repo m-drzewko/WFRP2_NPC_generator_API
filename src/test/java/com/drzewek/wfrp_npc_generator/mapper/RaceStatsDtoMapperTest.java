@@ -1,9 +1,9 @@
 package com.drzewek.wfrp_npc_generator.mapper;
 
+import com.drzewek.wfrp_npc_generator.model.RaceDto;
+import com.drzewek.wfrp_npc_generator.model.RaceStatsDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
-import com.drzewek.wfrp_npc_generator.model.RaceStatsWriteDto;
-import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -18,9 +18,9 @@ class RaceStatsDtoMapperTest {
 
     private RaceStats stats;
 
-    private RaceStatsWriteDto raceStatsDto;
+    private RaceStatsDto raceStatsDto;
 
-    private RaceWriteDto raceDto;
+    private RaceDto raceDto;
 
 
     @BeforeEach
@@ -34,11 +34,11 @@ class RaceStatsDtoMapperTest {
                 List.of("Purple", "Black"),
                 30, 125, 170, 40, 95);
 
-        raceStatsDto = new RaceStatsWriteDto(20, 20, 20,
+        raceStatsDto = new RaceStatsDto(20, 20, 20,
                 20, 20, 20, 20,
                 20, 13, 5);
 
-        raceDto = new RaceWriteDto("testDto", raceStatsDto, List.of("Dark Brown", "Black"),
+        raceDto = new RaceDto("testDto", raceStatsDto, List.of("Dark Brown", "Black"),
                 List.of("Purple", "Black"),
                 30, 125, 170, 40, 95);
     }
@@ -56,7 +56,7 @@ class RaceStatsDtoMapperTest {
     @Test
     void shouldMapRaceStatsToDto() {
         //given & when
-        RaceStatsWriteDto mappedDto = mapper.raceStatsToDto(stats);
+        RaceStatsDto mappedDto = mapper.raceStatsToDto(stats);
 
         //then
         assertNotNull(mappedDto);
@@ -77,7 +77,7 @@ class RaceStatsDtoMapperTest {
     @Test
     void shouldMapRaceToRaceDto() {
         //given & when
-        RaceWriteDto mappedDto = mapper.raceToDto(race);
+        RaceDto mappedDto = mapper.raceToDto(race);
 
         //then
         assertNotNull(mappedDto);
