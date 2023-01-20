@@ -1,10 +1,10 @@
 package com.drzewek.wfrp_npc_generator.service;
 
 import com.drzewek.wfrp_npc_generator.mapper.RaceStatsDtoMapper;
+import com.drzewek.wfrp_npc_generator.model.RaceDto;
+import com.drzewek.wfrp_npc_generator.model.RaceStatsDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
-import com.drzewek.wfrp_npc_generator.model.RaceStatsWriteDto;
-import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class RaceServiceTest {
 
     private Race race;
 
-    private RaceWriteDto raceDto;
+    private RaceDto raceDto;
 
     @BeforeEach
     void setup() {
@@ -44,7 +44,7 @@ class RaceServiceTest {
                         "Brown", "Dark Brown", "Silver", "Purple", "Black"),
                 30, 125, 170, 40, 95);
 
-        raceDto = new RaceWriteDto("testRaceDto", new RaceStatsWriteDto(10, 10,
+        raceDto = new RaceDto("testRaceDto", new RaceStatsDto(10, 10,
                 10, 10, 10, 10, 10,
                 10, 12, 4), List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
                 "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"),
@@ -56,7 +56,7 @@ class RaceServiceTest {
     @Test
     void shouldSaveNewRaceFromDto() {
         //given
-        when(mapper.dtoToRace(any(RaceWriteDto.class))).thenReturn(race);
+        when(mapper.dtoToRace(any(RaceDto.class))).thenReturn(race);
         when(raceRepository.save(any(Race.class))).thenReturn(race);
 
         //when

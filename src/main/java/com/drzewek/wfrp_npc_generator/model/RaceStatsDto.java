@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RaceStatsWriteDto {
+public class RaceStatsDto {
 
     private int basicWeaponSkill;
 

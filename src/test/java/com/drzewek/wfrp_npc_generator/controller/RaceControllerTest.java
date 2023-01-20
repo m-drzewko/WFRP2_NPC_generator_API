@@ -1,9 +1,9 @@
 package com.drzewek.wfrp_npc_generator.controller;
 
+import com.drzewek.wfrp_npc_generator.model.RaceDto;
+import com.drzewek.wfrp_npc_generator.model.RaceStatsDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
-import com.drzewek.wfrp_npc_generator.model.RaceStatsWriteDto;
-import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class RaceControllerTest {
 
     private List<Race> raceList;
 
-    private RaceWriteDto raceWriteDto;
+    private RaceDto raceDto;
 
     private Race raceToSave;
 
@@ -36,8 +36,8 @@ class RaceControllerTest {
 
     @BeforeEach
     void setup() {
-        raceWriteDto = new RaceWriteDto("testRaceDto",
-                new RaceStatsWriteDto(10, 10,10,
+        raceDto = new RaceDto("testRaceDto",
+                new RaceStatsDto(10, 10,10,
                         10, 10, 10, 10,
                         10, 12, 4),
                 List.of("Silver", "Ash Blond"), List.of("Grey Blue", "Blue"),
@@ -80,10 +80,10 @@ class RaceControllerTest {
     @Test
     void shouldSaveProvidedRaceDto() {
         //given
-        when(raceService.saveNewRace(any(RaceWriteDto.class))).thenReturn(raceToSave);
+        when(raceService.saveNewRace(any(RaceDto.class))).thenReturn(raceToSave);
 
         //when
-        Race returnedRace = raceController.submitRace(raceWriteDto);
+        Race returnedRace = raceController.submitRace(raceDto);
 
         //then
         assertNotNull(returnedRace);

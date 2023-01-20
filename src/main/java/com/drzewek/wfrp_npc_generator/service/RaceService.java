@@ -1,8 +1,8 @@
 package com.drzewek.wfrp_npc_generator.service;
 
 import com.drzewek.wfrp_npc_generator.mapper.RaceStatsDtoMapper;
+import com.drzewek.wfrp_npc_generator.model.RaceDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
-import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class RaceService {
         return raceRepository.findAll();
     }
 
-    public Race saveNewRace(RaceWriteDto raceToSave) {
+    public Race saveNewRace(RaceDto raceToSave) {
         log.trace("Saving new race: " + raceToSave.getName());
         return raceRepository.save(mapper.dtoToRace(raceToSave));
     }

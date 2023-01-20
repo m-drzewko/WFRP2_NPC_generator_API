@@ -1,7 +1,7 @@
 package com.drzewek.wfrp_npc_generator.controller;
 
+import com.drzewek.wfrp_npc_generator.model.RaceDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
-import com.drzewek.wfrp_npc_generator.model.RaceWriteDto;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -35,7 +35,7 @@ public class RaceController {
         content = { @Content(mediaType = "application/json",
             schema = @Schema(implementation = Race.class))})
     @PostMapping("/races/new")
-    public Race submitRace(@RequestBody RaceWriteDto newRace) {
+    public Race submitRace(@RequestBody RaceDto newRace) {
         return service.saveNewRace(newRace);
     }
 }
