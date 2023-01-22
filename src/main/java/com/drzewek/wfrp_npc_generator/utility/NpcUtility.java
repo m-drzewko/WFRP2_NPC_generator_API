@@ -18,7 +18,7 @@ public class NpcUtility {
 
         npc.setRace(race);
         npc.setGender(Generator.generateGender());
-        npc.setName("Test NPC");
+        npc.setName("Random "+ npc.getGender().toString().toLowerCase() + " " + race.getName());
 
         if (npc.getGender() == Gender.FEMALE) {
             if (npc.getRace().getName().equals("Dwarf")) {
