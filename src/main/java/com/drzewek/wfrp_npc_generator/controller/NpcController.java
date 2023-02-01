@@ -19,7 +19,6 @@ public class NpcController {
 
     @PostMapping("/generate")
     public ResponseObject<Npc> generateNpc(@RequestParam("race") String race) {
-        return new ResponseObject<>(HttpStatus.ACCEPTED,
-                "Returning generated NPC", npcService.generateNpc(race));
+        return new ResponseObject<>(HttpStatus.ACCEPTED, "Returning generated NPC", npcService.generateNpc(race));
     }
 }
