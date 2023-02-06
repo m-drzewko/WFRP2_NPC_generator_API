@@ -20,11 +20,8 @@ public class NpcService {
     public Npc generateNpc(String raceName) {
         String raceToFind = raceName.toLowerCase();
         raceToFind = StringUtils.capitalize(raceToFind);
-        Race raceToAssign = raceRepository.findByName(raceToFind);
-
-        if (raceToAssign == null) {
-            throw new EntityNotFoundException("Race " + raceName + " does not exist!");
-        }
+        Race raceToAssign = raceRepository.findByName(raceToFind)
+                .orElseThrow(() -> new EntityNotFoundException("Race " + raceName + " does not exist!"));
 
         Npc generatedNpc = NpcUtility.generateNpc(raceToAssign);
 
