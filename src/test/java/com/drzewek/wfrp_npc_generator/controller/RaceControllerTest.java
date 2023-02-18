@@ -83,10 +83,10 @@ class RaceControllerTest {
     @Test
     void shouldSaveProvidedRaceDto() {
         //given
-        when(raceService.saveNewRace(any(RaceDto.class))).thenReturn(raceToSave);
+        when(raceService.saveNewRaceFromDto(any(RaceDto.class))).thenReturn(raceToSave);
 
         //when
-        ResponseObject<Race> returnedRace = new ResponseObject<>(HttpStatus.CREATED, "Saving new race", raceService.saveNewRace(raceDto));
+        ResponseObject<Race> returnedRace = new ResponseObject<>(HttpStatus.CREATED, "Saving new race", raceService.saveNewRaceFromDto(raceDto));
 
         //then
         assertNotNull(returnedRace);

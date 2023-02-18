@@ -23,8 +23,23 @@ public class RaceService {
         return raceRepository.findAll();
     }
 
-    public Race saveNewRace(RaceDto raceToSave) {
-        log.trace("Saving new race: " + raceToSave.getName());
-        return raceRepository.save(mapper.dtoToRace(raceToSave));
+    public Race saveNewRaceFromDto(RaceDto raceToSave) {
+        if (raceRepository.existsByName(raceToSave.getName())) {
+            log.info("Race " + raceToSave.getName() + " already exists! Only one race can exist with this name.");
+            return raceRepository.findByName(raceToSave.getName()).get();
+        } else {
+            log.trace("Saving new race: " + raceToSave.getName());
+            return raceRepository.save(mapper.dtoToRace(raceToSave));
+        }
+    }
+
+    public Race saveNewRace(Race race) {
+        if (raceRepository.existsByName(race.getName())) {
+            log.info("Race " + race.getName() + " already exists! Only one race can exist with this name.");
+            return raceRepository.findByName(race.getName()).get();
+        } else {
+            log.trace("Saving new race: " + race.getName());
+            return raceRepository.save(race);
+        }
     }
 }

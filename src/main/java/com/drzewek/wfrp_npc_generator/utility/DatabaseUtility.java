@@ -50,9 +50,9 @@ public class DatabaseUtility {
                         "Brown", "Brown", "Dark Brown", "Dark Brown", "Dark Brown"),
                 20, 60, 110, 35, 70);
 
-        raceService.saveNewRace(elf);
-        raceService.saveNewRace(human);
-        raceService.saveNewRace(dwarf);
-        raceService.saveNewRace(halfling);
+        raceService.saveNewRaceFromDto(elf);
+        raceService.saveNewRaceFromDto(human);
+        raceService.saveNewRaceFromDto(dwarf);
+        raceService.saveNewRaceFromDto(halfling);
     }
 }

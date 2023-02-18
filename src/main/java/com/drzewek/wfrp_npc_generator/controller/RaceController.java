@@ -38,6 +38,6 @@ public class RaceController {
             schema = @Schema(implementation = Race.class))})
     @PostMapping("/races/new")
     public ResponseObject<Race> submitRace(@RequestBody RaceDto newRace) {
-        return new ResponseObject<>(HttpStatus.CREATED, "Saving new race", service.saveNewRace(newRace));
+        return new ResponseObject<>(HttpStatus.CREATED, "Saving new race", service.saveNewRaceFromDto(newRace));
     }
 }

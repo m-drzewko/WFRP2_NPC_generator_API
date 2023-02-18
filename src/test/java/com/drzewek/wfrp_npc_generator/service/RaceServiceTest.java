@@ -60,7 +60,7 @@ class RaceServiceTest {
         when(raceRepository.save(any(Race.class))).thenReturn(race);
 
         //when
-        Race savedRace = raceService.saveNewRace(raceDto);
+        Race savedRace = raceService.saveNewRaceFromDto(raceDto);
 
         //then
         assertNotNull(savedRace);
