@@ -3,6 +3,7 @@ package com.drzewek.wfrp_npc_generator.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class RaceStats {
 
     @Id
@@ -48,18 +50,4 @@ public class RaceStats {
     @Schema(description = "character's movement speed")
     private int movement;
 
-    public RaceStats(int basicWeaponSkill, int basicBallisticSkill, int basicStrength, int basicToughness,
-                     int basicAgility, int basicIntelligence, int basicWillPower, int basicFellowship,
-                     int maxWounds, int movement) {
-        this.basicWeaponSkill = basicWeaponSkill;
-        this.basicBallisticSkill = basicBallisticSkill;
-        this.basicStrength = basicStrength;
-        this.basicToughness = basicToughness;
-        this.basicAgility = basicAgility;
-        this.basicIntelligence = basicIntelligence;
-        this.basicWillPower = basicWillPower;
-        this.basicFellowship = basicFellowship;
-        this.maxWounds = maxWounds;
-        this.movement = movement;
-    }
 }

@@ -25,22 +25,55 @@ class RaceStatsDtoMapperTest {
 
     @BeforeEach
     void setUp() {
-        stats = new RaceStats(15, 15, 15, 15,
-                15, 15, 15,
-                15, 12, 4);
+        stats = RaceStats.builder()
+                .basicWeaponSkill(15)
+                .basicBallisticSkill(15)
+                .basicStrength(15)
+                .basicToughness(15)
+                .basicAgility(15)
+                .basicIntelligence(15)
+                .basicWillPower(15)
+                .basicFellowship(15)
+                .maxWounds(12)
+                .movement(4)
+                .build();
 
-        race = new Race("testName", stats,
-                List.of("Dark Brown", "Black"),
-                List.of("Purple", "Black"),
-                30, 125, 170, 40, 95);
+        race = Race.builder()
+                .name("testName")
+                .stats(stats)
+                .hairColors(List.of("Dark Brown", "Black"))
+                .eyeColors(List.of("Purple", "Black"))
+                .minimumAge(30)
+                .maximumAge(125)
+                .baseHeight(170)
+                .minimumWeight(40)
+                .maximumWeight(95)
+                .build();
 
-        raceStatsDto = new RaceStatsDto(20, 20, 20,
-                20, 20, 20, 20,
-                20, 13, 5);
+        raceStatsDto = RaceStatsDto.builder()
+                .basicWeaponSkill(20)
+                .basicBallisticSkill(20)
+                .basicStrength(20)
+                .basicToughness(20)
+                .basicAgility(20)
+                .basicIntelligence(20)
+                .basicWillPower(20)
+                .basicFellowship(20)
+                .maxWounds(13)
+                .movement(5)
+                .build();
 
-        raceDto = new RaceDto("testDto", raceStatsDto, List.of("Dark Brown", "Black"),
-                List.of("Purple", "Black"),
-                30, 125, 170, 40, 95);
+        raceDto = RaceDto.builder()
+                .name("testDto")
+                .stats(raceStatsDto)
+                .hairColors(List.of("Dark Brown", "Black"))
+                .eyeColors(List.of("Purple", "Black"))
+                .minimumAge(30)
+                .maximumAge(125)
+                .baseHeight(170)
+                .minimumWeight(40)
+                .maximumWeight(95)
+                .build();
     }
 
     @Test

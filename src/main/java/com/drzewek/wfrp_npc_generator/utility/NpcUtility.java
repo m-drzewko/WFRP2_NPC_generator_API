@@ -41,7 +41,7 @@ public class NpcUtility {
         npc.setEyeColor(npc.getRace().
                 getEyeColors().get(Generator.generateD10() - 1));
 
-        HashMap<String, Integer> statistics = Generator.generateStatistics();
+        HashMap<String, Integer> statistics = (HashMap<String, Integer>) Generator.generateStatistics();
 
         npc.setWeaponSkill(npc.getRace().getStats().getBasicWeaponSkill()
                 + statistics.get("weaponSkill"));

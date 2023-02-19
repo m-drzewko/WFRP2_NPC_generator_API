@@ -15,7 +15,7 @@ class RaceRepositoryTest {
 
     @Test
     void shouldSaveRace() {
-        Race race = new Race("testRace");
+        Race race = Race.builder().name("testRace").build();
 
         var savedRace = raceRepository.save(race);
 

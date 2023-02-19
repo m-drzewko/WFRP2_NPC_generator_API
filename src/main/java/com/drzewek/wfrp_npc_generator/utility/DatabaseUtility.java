@@ -1,10 +1,11 @@
 package com.drzewek.wfrp_npc_generator.utility;
 
-import com.drzewek.wfrp_npc_generator.model.RaceDto;
-import com.drzewek.wfrp_npc_generator.model.RaceStatsDto;
+import com.drzewek.wfrp_npc_generator.model.entity.Race;
+import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.PostConstruct;
 import java.util.List;
 
@@ -17,42 +18,109 @@ public class DatabaseUtility {
     @PostConstruct
     public void initializeRaceDatabase() {
 
-        RaceDto elf = new RaceDto("Elf", new RaceStatsDto(20, 30,
-                20, 20, 30, 20,
-                20, 20, 12, 5),
-                List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
-                        "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"),
-                List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
-                        "Brown", "Dark Brown", "Silver", "Purple", "Black"),
-                30, 125, 170, 40, 95);
-        RaceDto human = new RaceDto("Human", new RaceStatsDto(20, 20,
-                20, 20, 20, 20,
-                20, 20, 13, 4),
-                List.of("Ash Blond", "Corn", "Yellow", "Copper", "Red",
-                        "Light Brown", "Brown", "Brown", "Dark Brown", "Black"),
-                List.of("Pale Grey", "Grey Blue", "Blue", "Green", "Copper",
-                        "Light Brown", "Brown", "Dark Brown", "Purple", "Black"),
-                16, 35, 160, 50, 110);
-        RaceDto dwarf = new RaceDto("Dwarf", new RaceStatsDto(30, 20,
-                20, 30, 10, 20,
-                20, 10, 14, 3),
-                List.of("Ash Blond", "Yellow", "Red", "Copper","Light Brown",
-                        "Brown", "Brown", "Dark Brown", "Blue Black", "Black"),
-                List.of("Pale Grey", "Blue", "Copper", "Light Brown", "Light Brown",
-                        "Brown", "Brown", "Dark Brown", "Dark Brown", "Purple"),
-                20, 115, 145, 45, 100);
-        RaceDto halfling = new RaceDto("Halfling", new RaceStatsDto(10, 30,
-                10, 10, 30, 20,
-                20, 30, 11, 4),
-                List.of("Ash Blond", "Corn", "Yellow", "Yellow", "Copper",
-                        "Red", "Light Brown", "Brown", "Dark Brown", "Black"),
-                List.of("Blue", "Hazel", "Light Brown", "Light Brown",
-                        "Brown", "Brown", "Dark Brown", "Dark Brown", "Dark Brown"),
-                20, 60, 110, 35, 70);
+        Race elf = Race.builder()
+                .name("Elf")
+                .stats(RaceStats.builder()
+                        .basicWeaponSkill(20)
+                        .basicBallisticSkill(30)
+                        .basicStrength(20)
+                        .basicToughness(20)
+                        .basicAgility(30)
+                        .basicIntelligence(20)
+                        .basicWillPower(20)
+                        .basicFellowship(20)
+                        .maxWounds(12)
+                        .movement(5)
+                        .build())
+                .hairColors(List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
+                        "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"))
+                .eyeColors(List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
+                        "Brown", "Dark Brown", "Silver", "Purple", "Black"))
+                .minimumAge(30)
+                .maximumAge(125)
+                .baseHeight(170)
+                .minimumWeight(40)
+                .maximumWeight(95)
+                .build();
 
-        raceService.saveNewRaceFromDto(elf);
-        raceService.saveNewRaceFromDto(human);
-        raceService.saveNewRaceFromDto(dwarf);
-        raceService.saveNewRaceFromDto(halfling);
+        Race human = Race.builder()
+                .name("Human")
+                .stats(RaceStats.builder()
+                        .basicWeaponSkill(20)
+                        .basicBallisticSkill(20)
+                        .basicStrength(20)
+                        .basicToughness(20)
+                        .basicAgility(20)
+                        .basicIntelligence(20)
+                        .basicWillPower(20)
+                        .basicFellowship(20)
+                        .maxWounds(13)
+                        .movement(4)
+                        .build())
+                .hairColors(List.of("Ash Blond", "Corn", "Yellow", "Copper", "Red",
+                        "Light Brown", "Brown", "Brown", "Dark Brown", "Black"))
+                .eyeColors(List.of("Pale Grey", "Grey Blue", "Blue", "Green", "Copper",
+                        "Light Brown", "Brown", "Dark Brown", "Purple", "Black"))
+                .minimumAge(16)
+                .maximumAge(35)
+                .baseHeight(160)
+                .minimumWeight(50)
+                .maximumWeight(110)
+                .build();
+
+        Race dwarf = Race.builder()
+                .name("Elf")
+                .stats(RaceStats.builder()
+                        .basicWeaponSkill(30)
+                        .basicBallisticSkill(20)
+                        .basicStrength(20)
+                        .basicToughness(30)
+                        .basicAgility(10)
+                        .basicIntelligence(20)
+                        .basicWillPower(20)
+                        .basicFellowship(10)
+                        .maxWounds(14)
+                        .movement(3)
+                        .build())
+                .hairColors(List.of("Ash Blond", "Yellow", "Red", "Copper","Light Brown",
+                        "Brown", "Brown", "Dark Brown", "Blue Black", "Black"))
+                .eyeColors(List.of("Pale Grey", "Blue", "Copper", "Light Brown", "Light Brown",
+                        "Brown", "Brown", "Dark Brown", "Dark Brown", "Purple"))
+                .minimumAge(20)
+                .maximumAge(115)
+                .baseHeight(145)
+                .minimumWeight(45)
+                .maximumWeight(100)
+                .build();
+
+        Race halfling = Race.builder()
+                .name("Elf")
+                .stats(RaceStats.builder()
+                        .basicWeaponSkill(10)
+                        .basicBallisticSkill(30)
+                        .basicStrength(10)
+                        .basicToughness(10)
+                        .basicAgility(30)
+                        .basicIntelligence(20)
+                        .basicWillPower(20)
+                        .basicFellowship(30)
+                        .maxWounds(11)
+                        .movement(4)
+                        .build())
+                .hairColors(List.of("Ash Blond", "Corn", "Yellow", "Yellow", "Copper",
+                        "Red", "Light Brown", "Brown", "Dark Brown", "Black"))
+                .eyeColors(List.of("Blue", "Hazel", "Light Brown", "Light Brown",
+                        "Brown", "Brown", "Dark Brown", "Dark Brown", "Dark Brown"))
+                .minimumAge(20)
+                .maximumAge(60)
+                .baseHeight(110)
+                .minimumWeight(35)
+                .maximumWeight(70)
+                .build();
+
+        raceService.saveNewRace(elf);
+        raceService.saveNewRace(human);
+        raceService.saveNewRace(dwarf);
+        raceService.saveNewRace(halfling);
     }
 }

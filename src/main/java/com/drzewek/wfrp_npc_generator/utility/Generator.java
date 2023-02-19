@@ -4,6 +4,7 @@ import com.drzewek.wfrp_npc_generator.model.Gender;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -44,7 +45,7 @@ public class Generator {
         return number - random.nextInt(4);
     }
 
-    public static HashMap<String, Integer> generateStatistics() {
+    public static Map<String, Integer> generateStatistics() {
 
         HashMap<String, Integer> rolls = new HashMap<>();
         rolls.put("weaponSkill", generate2d10());
