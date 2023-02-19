@@ -34,8 +34,12 @@ public class DatabaseUtility {
                         .build())
                 .hairColors(List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
                         "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"))
+                .hairColorsPl(List.of("Srebrny", "Popielaty", "Jasny blond", "Ciemny blond", "Rudy",
+                        "Jasnobrązowy", "Jasnobrązowy", "Brązowy", "Ciemnobrązowy", "Czarny"))
                 .eyeColors(List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
                         "Brown", "Dark Brown", "Silver", "Purple", "Black"))
+                .eyeColorsPl(List.of("Ciemnoniebieski", "Niebieski", "Zielony", "Rudy", "Jasnobrązowy",
+                        "Brązowy", "Ciemnobrązowy", "Srebrny", "Fioletowy", "Czarny"))
                 .minimumAge(30)
                 .maximumAge(125)
                 .baseHeight(170)
@@ -59,8 +63,12 @@ public class DatabaseUtility {
                         .build())
                 .hairColors(List.of("Ash Blond", "Corn", "Yellow", "Copper", "Red",
                         "Light Brown", "Brown", "Brown", "Dark Brown", "Black"))
+                .hairColorsPl(List.of("Popielaty", "Jasny blond", "Ciemny blond", "Rudy", "Ciemnorudy",
+                        "Jasnobrązowy", "Brązowy", "Brązowy", "Ciemnobrązowy", "Czarny"))
                 .eyeColors(List.of("Pale Grey", "Grey Blue", "Blue", "Green", "Copper",
                         "Light Brown", "Brown", "Dark Brown", "Purple", "Black"))
+                .eyeColorsPl(List.of("Szary", "Ciemnoniebieski", "Niebieski", "Zielony", "Rudy",
+                        "Jasnobrązowy", "Brązowy", "Ciemnobrązowy", "Fioletowy", "Czarny"))
                 .minimumAge(16)
                 .maximumAge(35)
                 .baseHeight(160)
@@ -69,7 +77,7 @@ public class DatabaseUtility {
                 .build();
 
         Race dwarf = Race.builder()
-                .name("Elf")
+                .name("Dwarf")
                 .stats(RaceStats.builder()
                         .basicWeaponSkill(30)
                         .basicBallisticSkill(20)
@@ -84,8 +92,12 @@ public class DatabaseUtility {
                         .build())
                 .hairColors(List.of("Ash Blond", "Yellow", "Red", "Copper","Light Brown",
                         "Brown", "Brown", "Dark Brown", "Blue Black", "Black"))
+                .hairColorsPl(List.of("Popielaty", "Ciemny blond", "Ciemnorudy", "Rudy", "Jasnobrązowy",
+                        "Brązowy", "Brązowy", "Ciemnobrązowy", "Kruczoczarny", "Czarny"))
                 .eyeColors(List.of("Pale Grey", "Blue", "Copper", "Light Brown", "Light Brown",
                         "Brown", "Brown", "Dark Brown", "Dark Brown", "Purple"))
+                .eyeColorsPl(List.of("Szary", "Niebieski", "Rudy", "Jasnobrązowy", "Jasnobrązowy",
+                        "Brązowy", "Brązowy", "Ciemnobrązowy", "Ciemnobrązowy", "Fioletowy"))
                 .minimumAge(20)
                 .maximumAge(115)
                 .baseHeight(145)
@@ -94,7 +106,7 @@ public class DatabaseUtility {
                 .build();
 
         Race halfling = Race.builder()
-                .name("Elf")
+                .name("Halfling")
                 .stats(RaceStats.builder()
                         .basicWeaponSkill(10)
                         .basicBallisticSkill(30)
@@ -109,8 +121,12 @@ public class DatabaseUtility {
                         .build())
                 .hairColors(List.of("Ash Blond", "Corn", "Yellow", "Yellow", "Copper",
                         "Red", "Light Brown", "Brown", "Dark Brown", "Black"))
+                .hairColorsPl(List.of("Popielaty", "Jasny blond", "Ciemny blond", "Ciemny blond", "Rudy",
+                        "Ciemnorudy", "Jasnobrązowy", "Brązowy", "Ciemnobrązowy", "Czarny"))
                 .eyeColors(List.of("Blue", "Hazel", "Light Brown", "Light Brown",
                         "Brown", "Brown", "Dark Brown", "Dark Brown", "Dark Brown"))
+                .eyeColorsPl(List.of("Niebieski", "Kasztanowy", "Jasnobrązowy", "Jasnobrązowy", "Brązowy",
+                        "Brązowy", "Brązowy", "Ciemnobrązowy", "Ciemnobrązowy", "Ciemnobrązowy"))
                 .minimumAge(20)
                 .maximumAge(60)
                 .baseHeight(110)
