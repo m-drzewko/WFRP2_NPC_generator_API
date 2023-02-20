@@ -29,13 +29,13 @@ class RaceControllerTest {
     @Autowired
     private RaceController raceController;
 
-    private List<Race> raceList;
+    private List<RaceDto> raceDtoList;
 
     private RaceDto raceDto;
 
     private Race raceToSave;
 
-    private Race raceToSave2;
+    private RaceDto raceToSave2;
 
     @BeforeEach
     void setup() {
@@ -86,9 +86,9 @@ class RaceControllerTest {
                 .maximumWeight(95)
                 .build();
 
-        raceToSave2 = Race.builder()
+        raceToSave2 = RaceDto.builder()
                 .name("testRace")
-                .stats(RaceStats.builder()
+                .stats(RaceStatsDto.builder()
                         .basicWeaponSkill(15)
                         .basicBallisticSkill(15)
                         .basicStrength(15)
@@ -109,17 +109,17 @@ class RaceControllerTest {
                 .maximumWeight(95)
                 .build();
 
-        raceList = Arrays.asList(raceToSave, raceToSave2);
+        raceDtoList = Arrays.asList(raceDto, raceToSave2);
 
     }
 
     @Test
     void shouldReturnResponseObjectWithListOfRaces() {
         //given
-        when(raceService.getAllRaces()).thenReturn(raceList);
+        when(raceService.getAllRaces()).thenReturn(raceDtoList);
 
         //when
-        ResponseObject<List<Race>> races = new ResponseObject<>(HttpStatus.OK, "Returning all races", raceService.getAllRaces());
+        ResponseObject<List<RaceDto>> races = new ResponseObject<>(HttpStatus.OK, "Returning all races", raceService.getAllRaces());
 
         //then
         assertNotNull(races);

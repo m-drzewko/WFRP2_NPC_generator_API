@@ -27,7 +27,7 @@ public class RaceController {
         content = { @Content(mediaType = "application/json",
             array = @ArraySchema(schema = @Schema(implementation = Race.class))) })
     @GetMapping("/races")
-    public ResponseObject<List<Race>> getAllRaces() {
+    public ResponseObject<List<RaceDto>> getAllRaces() {
         return new ResponseObject<>(HttpStatus.OK, "Returning all races", service.getAllRaces());
     }
 

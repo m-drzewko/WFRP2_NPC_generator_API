@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -18,9 +20,12 @@ public class RaceService {
 
     private final RaceStatsDtoMapper mapper;
 
-    public List<Race> getAllRaces() {
+    public List<RaceDto> getAllRaces() {
         log.trace("Returning all races");
-        return raceRepository.findAll();
+        List<RaceDto> listOfDtos = raceRepository.findAll().stream()
+                .map(race -> mapper.raceToDto(race))
+                .collect(Collectors.toList());
+        return listOfDtos;
     }
 
     public Race saveNewRaceFromDto(RaceDto raceToSave) {
@@ -41,5 +46,9 @@ public class RaceService {
             log.trace("Saving new race: " + race.getName());
             return raceRepository.save(race);
         }
+    }
+
+    public Race getRaceById(Long id) {
+        return raceRepository.findById(id).orElseThrow();
     }
 }

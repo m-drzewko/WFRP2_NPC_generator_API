@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -14,6 +15,12 @@ public class ControllerAdvice {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
     public ErrorResponseObject entityNotFoundException(Exception exception) {
+        return new ErrorResponseObject(HttpStatus.NOT_FOUND, exception.getMessage(), LocalDateTime.now());
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoSuchElementException.class)
+    public ErrorResponseObject noSuchElementExcetion(Exception exception) {
         return new ErrorResponseObject(HttpStatus.NOT_FOUND, exception.getMessage(), LocalDateTime.now());
     }
 

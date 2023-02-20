@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/npc")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class NpcController {
 
@@ -17,8 +18,8 @@ public class NpcController {
 
     @PostMapping("/generate")
     public ResponseObject<Npc> generateNpc(@RequestHeader (HttpHeaders.ACCEPT_LANGUAGE) String lang,
-                                           @RequestParam("race") String race,
-                                           @RequestParam("gender") String gender) {
-        return new ResponseObject<>(HttpStatus.ACCEPTED, "Returning generated NPC", npcService.generateNpc(race));
+                                           @RequestParam(value = "race") String race,
+                                           @RequestParam(value = "gender") String gender) {
+        return new ResponseObject<>(HttpStatus.ACCEPTED, "Returning generated NPC", npcService.generateNpc(lang, race, gender));
     }
 }
