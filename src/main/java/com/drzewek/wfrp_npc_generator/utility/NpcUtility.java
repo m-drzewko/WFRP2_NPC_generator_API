@@ -23,6 +23,8 @@ public class NpcUtility {
             npc.setGender(gender);
         }
 
+        npc.setName("Random " + npc.getGender().toString().toLowerCase() + " " + npc.getRace().getName() + " npc");
+
         if (npc.getGender() == Gender.FEMALE) {
             if (npc.getRace().getName().equals("Dwarf")) {
                 npc.setHeight(npc.getRace().getBaseHeight() + Generator.generate2d10() - 15);

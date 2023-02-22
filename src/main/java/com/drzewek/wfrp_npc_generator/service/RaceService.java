@@ -51,4 +51,8 @@ public class RaceService {
     public Race getRaceById(Long id) {
         return raceRepository.findById(id).orElseThrow();
     }
+
+    public Race getRaceByName(String name) {
+        return raceRepository.findByName(name).orElseThrow();
+    }
 }

@@ -1,6 +1,8 @@
 package com.drzewek.wfrp_npc_generator.service;
 
+import com.drzewek.wfrp_npc_generator.mapper.NpcDtoMapper;
 import com.drzewek.wfrp_npc_generator.model.Gender;
+import com.drzewek.wfrp_npc_generator.model.NpcDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.repository.NpcRepository;
@@ -8,7 +10,6 @@ import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
 import com.drzewek.wfrp_npc_generator.utility.NpcUtility;
 import com.drzewek.wfrp_npc_generator.utility.RaceUtility;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import javax.persistence.EntityNotFoundException;
@@ -21,8 +22,9 @@ public class NpcService {
     private final NpcRepository npcRepository;
     private static final String RANDOM = "random";
     private RaceUtility raceUtility;
+    private final NpcDtoMapper npcDtoMapper;
 
-    public Npc generateNpc(String lang, String raceName, String gender) {
+    public NpcDto generateNpc(String lang, String raceName, String gender) {
 
         Npc generatedNpc;
 
@@ -52,6 +54,8 @@ public class NpcService {
             } else throw new EntityNotFoundException("Gender " + gender + " does not exist!");
         }
 
-        return generatedNpc;
+        NpcDto generatedNpcDto = npcDtoMapper.npcToDto(generatedNpc);
+
+        return generatedNpcDto;
     }
 }

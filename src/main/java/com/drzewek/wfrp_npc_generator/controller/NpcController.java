@@ -1,5 +1,6 @@
 package com.drzewek.wfrp_npc_generator.controller;
 
+import com.drzewek.wfrp_npc_generator.model.NpcDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.service.NpcService;
@@ -17,9 +18,9 @@ public class NpcController {
     private final NpcService npcService;
 
     @PostMapping("/generate")
-    public ResponseObject<Npc> generateNpc(@RequestHeader (HttpHeaders.ACCEPT_LANGUAGE) String lang,
-                                           @RequestParam(value = "race") String race,
-                                           @RequestParam(value = "gender") String gender) {
+    public ResponseObject<NpcDto> generateNpc(@RequestHeader (HttpHeaders.ACCEPT_LANGUAGE) String lang,
+                                              @RequestParam(value = "race") String race,
+                                              @RequestParam(value = "gender") String gender) {
         return new ResponseObject<>(HttpStatus.ACCEPTED, "Returning generated NPC", npcService.generateNpc(lang, race, gender));
     }
 }
