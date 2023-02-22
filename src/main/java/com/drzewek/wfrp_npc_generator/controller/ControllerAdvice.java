@@ -20,7 +20,7 @@ public class ControllerAdvice {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
-    public ErrorResponseObject noSuchElementExcetion(Exception exception) {
+    public ErrorResponseObject noSuchElementException(Exception exception) {
         return new ErrorResponseObject(HttpStatus.NOT_FOUND, exception.getMessage(), LocalDateTime.now());
     }
 

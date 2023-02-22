@@ -30,14 +30,4 @@ public class RaceController {
     public ResponseObject<List<RaceDto>> getAllRaces() {
         return new ResponseObject<>(HttpStatus.OK, "Returning all races", service.getAllRaces());
     }
-
-    @Operation(summary = "Saves new race based on provided DTO")
-    @ApiResponse(responseCode = "201",
-        description = "Saved new race to repository",
-        content = { @Content(mediaType = "application/json",
-            schema = @Schema(implementation = Race.class))})
-    @PostMapping("/races/new")
-    public ResponseObject<Race> submitRace(@RequestBody RaceDto newRace) {
-        return new ResponseObject<>(HttpStatus.CREATED, "Saving new race", service.saveNewRaceFromDto(newRace));
-    }
 }
