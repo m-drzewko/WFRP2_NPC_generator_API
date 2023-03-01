@@ -2,28 +2,33 @@ package com.drzewek.wfrp_npc_generator.utility;
 
 import com.drzewek.wfrp_npc_generator.model.Gender;
 import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Generator {
 
+    private static final Random random = new Random();
+
+    public static int generateD4() {
+        return random.ints(1, 5)
+                .findFirst().getAsInt();
+    }
+
     public static int generate2d10() {
-        Random random = new Random();
         return random.ints(2, 21)
                 .findFirst().getAsInt();
     }
 
     public static int generateD10() {
-        Random random = new Random();
         return random.ints(1, 11)
                 .findFirst().getAsInt();
     }
 
     public static Gender generateGender() {
-        Random random = new Random();
         boolean isMale = random.nextBoolean();
 
         if (isMale) {
@@ -34,17 +39,15 @@ public class Generator {
     }
 
     public static int generateFromRange(int min, int max) {
-        Random random = new Random();
         return random.ints(min, max + 1).
                 findFirst().getAsInt();
     }
 
     public static int generateWounds(int number) {
-        Random random = new Random();
         return number - random.nextInt(4);
     }
 
-    public static HashMap<String, Integer> generateStatistics() {
+    public static Map<String, Integer> generateStatistics() {
 
         HashMap<String, Integer> rolls = new HashMap<>();
         rolls.put("weaponSkill", generate2d10());

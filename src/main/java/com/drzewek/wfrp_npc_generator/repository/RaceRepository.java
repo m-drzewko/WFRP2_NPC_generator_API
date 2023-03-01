@@ -9,5 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface RaceRepository extends JpaRepository<Race, Long> {
-    Optional<Race> findByName(String race);
+    Optional<Race> findByName(String raceName);
+
+    boolean existsByName(String raceName);
 }

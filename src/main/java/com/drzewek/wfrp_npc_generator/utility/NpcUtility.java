@@ -12,13 +12,18 @@ import java.util.HashMap;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NpcUtility {
 
-    public static Npc generateNpc(Race race) {
-
+    public static Npc generateNpc(String lang, Gender gender, Race race) {
         Npc npc = new Npc();
 
         npc.setRace(race);
-        npc.setGender(Generator.generateGender());
-        npc.setName("Random "+ npc.getGender().toString().toLowerCase() + " " + race.getName());
+
+        if (gender==null) {
+            npc.setGender(Generator.generateGender());
+        } else {
+            npc.setGender(gender);
+        }
+
+        npc.setName("Random " + npc.getGender().toString().toLowerCase() + " " + npc.getRace().getName() + " npc");
 
         if (npc.getGender() == Gender.FEMALE) {
             if (npc.getRace().getName().equals("Dwarf")) {
@@ -36,12 +41,20 @@ public class NpcUtility {
         npc.setAge(Generator.generateFromRange(
                 npc.getRace().getMinimumAge(),
                 npc.getRace().getMaximumAge()));
-        npc.setHairColor(npc.getRace().
-                getHairColors().get(Generator.generateD10() - 1));
-        npc.setEyeColor(npc.getRace().
-                getEyeColors().get(Generator.generateD10() - 1));
 
-        HashMap<String, Integer> statistics = Generator.generateStatistics();
+        if (lang.equals("pl")) {
+            npc.setHairColor(npc.getRace().
+                    getHairColorsPl().get(Generator.generateD10() - 1));
+            npc.setEyeColor(npc.getRace().
+                    getEyeColorsPl().get(Generator.generateD10() - 1));
+        } else {
+            npc.setHairColor(npc.getRace().
+                    getHairColors().get(Generator.generateD10() - 1));
+            npc.setEyeColor(npc.getRace().
+                    getEyeColors().get(Generator.generateD10() - 1));
+        }
+
+        HashMap<String, Integer> statistics = (HashMap<String, Integer>) Generator.generateStatistics();
 
         npc.setWeaponSkill(npc.getRace().getStats().getBasicWeaponSkill()
                 + statistics.get("weaponSkill"));

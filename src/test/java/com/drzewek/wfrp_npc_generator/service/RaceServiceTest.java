@@ -36,21 +36,56 @@ class RaceServiceTest {
 
     @BeforeEach
     void setup() {
-        race = new Race("testRace", new RaceStats(10, 10, 10,
-                10, 10, 10, 10, 10,
-                12, 4), List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
-                "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"),
-                List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
-                        "Brown", "Dark Brown", "Silver", "Purple", "Black"),
-                30, 125, 170, 40, 95);
 
-        raceDto = new RaceDto("testRaceDto", new RaceStatsDto(10, 10,
-                10, 10, 10, 10, 10,
-                10, 12, 4), List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
-                "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"),
-                List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
-                        "Brown", "Dark Brown", "Silver", "Purple", "Black"),
-                30, 125, 170, 40, 95);
+        race = Race.builder()
+                .name("testRace")
+                .stats(RaceStats.builder()
+                        .basicWeaponSkill(10)
+                        .basicBallisticSkill(10)
+                        .basicStrength(10)
+                        .basicToughness(10)
+                        .basicAgility(10)
+                        .basicIntelligence(10)
+                        .basicWillPower(10)
+                        .basicFellowship(10)
+                        .maxWounds(12)
+                        .movement(4)
+                        .build())
+                .hairColors(List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
+                        "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"))
+                .eyeColors(List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
+                        "Brown", "Dark Brown", "Silver", "Purple", "Black"))
+                .minimumAge(30)
+                .maximumAge(125)
+                .baseHeight(170)
+                .minimumWeight(40)
+                .maximumWeight(95)
+                .build();
+
+        raceDto = RaceDto.builder()
+                .name("testRaceDto")
+                .stats(RaceStatsDto.builder()
+                        .basicWeaponSkill(10)
+                        .basicBallisticSkill(10)
+                        .basicStrength(10)
+                        .basicToughness(10)
+                        .basicAgility(10)
+                        .basicIntelligence(10)
+                        .basicWillPower(10)
+                        .basicFellowship(10)
+                        .maxWounds(12)
+                        .movement(4)
+                        .build())
+                .hairColors(List.of("Silver", "Ash Blond", "Corn", "Yellow", "Copper",
+                        "Light Brown", "Light Brown", "Brown", "Dark Brown", "Black"))
+                .eyeColors(List.of("Grey Blue", "Blue", "Green", "Copper", "Light Brown",
+                        "Brown", "Dark Brown", "Silver", "Purple", "Black"))
+                .minimumAge(30)
+                .maximumAge(125)
+                .baseHeight(170)
+                .minimumWeight(40)
+                .maximumWeight(95)
+                .build();
     }
 
     @Test
@@ -60,7 +95,7 @@ class RaceServiceTest {
         when(raceRepository.save(any(Race.class))).thenReturn(race);
 
         //when
-        Race savedRace = raceService.saveNewRace(raceDto);
+        Race savedRace = raceService.saveNewRaceFromDto(raceDto);
 
         //then
         assertNotNull(savedRace);

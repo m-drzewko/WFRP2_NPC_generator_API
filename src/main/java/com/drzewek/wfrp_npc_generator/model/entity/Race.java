@@ -1,6 +1,8 @@
 package com.drzewek.wfrp_npc_generator.model.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Race {
 
     @Id
@@ -24,12 +28,20 @@ public class Race {
     private RaceStats stats;
 
     @ElementCollection
-    @Schema(description = "list of possible hair colors for each race")
+    @Schema(description = "list of possible hair colors for each race, in English")
     private List<String> hairColors = new ArrayList<>();
 
     @ElementCollection
-    @Schema(description = "list of possible eye colors for each race")
+    @Schema(description = "list of possible hair colors for each race, in Polish")
+    private List<String> hairColorsPl = new ArrayList<>();
+
+    @ElementCollection
+    @Schema(description = "list of possible eye colors for each race, in English")
     private List<String> eyeColors = new ArrayList<>();
+
+    @ElementCollection
+    @Schema(description = "list of possible eye colors for each race, in Polish")
+    private List<String> eyeColorsPl = new ArrayList<>();
 
     @Schema(description = "minimum age a generated NPC of a race can be")
     private int minimumAge;
@@ -46,21 +58,4 @@ public class Race {
     @Schema(description = "maximum weight a generated NPC of a race can be")
     private int maximumWeight;
 
-    public Race(String name, RaceStats stats, List<String> hairColors,
-                List<String> eyeColors, int minimumAge, int maximumAge,
-                int baseHeight, int minimumWeight, int maximumWeight) {
-        this.name = name;
-        this.stats = stats;
-        this.hairColors = hairColors;
-        this.eyeColors = eyeColors;
-        this.minimumAge = minimumAge;
-        this.maximumAge = maximumAge;
-        this.baseHeight = baseHeight;
-        this.minimumWeight = minimumWeight;
-        this.maximumWeight = maximumWeight;
-    }
-
-    public Race(String name) {
-        this.name = name;
-    }
 }

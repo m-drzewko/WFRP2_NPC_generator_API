@@ -29,50 +29,97 @@ class RaceControllerTest {
     @Autowired
     private RaceController raceController;
 
-    private List<Race> raceList;
+    private List<RaceDto> raceDtoList;
 
     private RaceDto raceDto;
 
     private Race raceToSave;
 
-    private Race raceToSave2;
+    private RaceDto raceToSave2;
 
     @BeforeEach
     void setup() {
-        raceDto = new RaceDto("testRaceDto",
-                new RaceStatsDto(10, 10,10,
-                        10, 10, 10, 10,
-                        10, 12, 4),
-                List.of("Silver", "Ash Blond"), List.of("Grey Blue", "Blue"),
-                30, 125, 170, 40, 95);
 
-        raceToSave = new Race("testRace",
-                new RaceStats(10, 10, 10,
-                        10, 10, 10, 10,
-                        10, 12, 4),
-                List.of("Corn", "Yellow"),
-                List.of("Green", "Copper"),
-                30, 125, 170, 40, 95);
+        raceDto = RaceDto.builder()
+                .name("testRaceDto")
+                .stats(RaceStatsDto.builder()
+                        .basicWeaponSkill(10)
+                        .basicBallisticSkill(10)
+                        .basicStrength(10)
+                        .basicToughness(10)
+                        .basicAgility(10)
+                        .basicIntelligence(10)
+                        .basicWillPower(10)
+                        .basicFellowship(10)
+                        .maxWounds(12)
+                        .movement(4)
+                        .build())
+                .hairColors(List.of("Silver", "Ash Blond"))
+                .eyeColors(List.of("Grey Blue", "Blue"))
+                .minimumAge(30)
+                .maximumAge(125)
+                .baseHeight(170)
+                .minimumWeight(40)
+                .maximumWeight(95)
+                .build();
 
-        raceToSave2 = new Race("testRace2",
-                new RaceStats(15, 15, 15,
-                        15, 15, 15, 15,
-                        15, 11, 4),
-                List.of("Copper", "Light Brown"),
-                List.of("Light Brown", "Brown"),
-                30, 125, 170, 40, 95);
+        raceToSave = Race.builder()
+                .name("testRace")
+                .stats(RaceStats.builder()
+                        .basicWeaponSkill(10)
+                        .basicBallisticSkill(10)
+                        .basicStrength(10)
+                        .basicToughness(10)
+                        .basicAgility(10)
+                        .basicIntelligence(10)
+                        .basicWillPower(10)
+                        .basicFellowship(10)
+                        .maxWounds(12)
+                        .movement(4)
+                        .build())
+                .hairColors(List.of("Corn", "Yellow"))
+                .eyeColors(List.of("Green", "Copper"))
+                .minimumAge(30)
+                .maximumAge(125)
+                .baseHeight(170)
+                .minimumWeight(40)
+                .maximumWeight(95)
+                .build();
 
-        raceList = Arrays.asList(raceToSave, raceToSave2);
+        raceToSave2 = RaceDto.builder()
+                .name("testRace")
+                .stats(RaceStatsDto.builder()
+                        .basicWeaponSkill(15)
+                        .basicBallisticSkill(15)
+                        .basicStrength(15)
+                        .basicToughness(15)
+                        .basicAgility(15)
+                        .basicIntelligence(15)
+                        .basicWillPower(15)
+                        .basicFellowship(15)
+                        .maxWounds(11)
+                        .movement(4)
+                        .build())
+                .hairColors(List.of("Copper", "Light Brown"))
+                .eyeColors(List.of("Light Brown", "Brown"))
+                .minimumAge(30)
+                .maximumAge(125)
+                .baseHeight(170)
+                .minimumWeight(40)
+                .maximumWeight(95)
+                .build();
+
+        raceDtoList = Arrays.asList(raceDto, raceToSave2);
 
     }
 
     @Test
     void shouldReturnResponseObjectWithListOfRaces() {
         //given
-        when(raceService.getAllRaces()).thenReturn(raceList);
+        when(raceService.getAllRaces()).thenReturn(raceDtoList);
 
         //when
-        ResponseObject<List<Race>> races = new ResponseObject<>(HttpStatus.OK, "Returning all races", raceService.getAllRaces());
+        ResponseObject<List<RaceDto>> races = new ResponseObject<>(HttpStatus.OK, "Returning all races", raceService.getAllRaces());
 
         //then
         assertNotNull(races);
@@ -83,10 +130,10 @@ class RaceControllerTest {
     @Test
     void shouldSaveProvidedRaceDto() {
         //given
-        when(raceService.saveNewRace(any(RaceDto.class))).thenReturn(raceToSave);
+        when(raceService.saveNewRaceFromDto(any(RaceDto.class))).thenReturn(raceToSave);
 
         //when
-        ResponseObject<Race> returnedRace = new ResponseObject<>(HttpStatus.CREATED, "Saving new race", raceService.saveNewRace(raceDto));
+        ResponseObject<Race> returnedRace = new ResponseObject<>(HttpStatus.CREATED, "Saving new race", raceService.saveNewRaceFromDto(raceDto));
 
         //then
         assertNotNull(returnedRace);

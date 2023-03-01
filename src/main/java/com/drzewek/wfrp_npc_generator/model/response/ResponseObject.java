@@ -1,15 +1,13 @@
 package com.drzewek.wfrp_npc_generator.model.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ResponseObject<T> {
 
     private HttpStatus statusCode;
