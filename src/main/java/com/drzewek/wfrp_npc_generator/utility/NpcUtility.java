@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -54,7 +56,7 @@ public class NpcUtility {
                     getEyeColors().get(Generator.generateD10() - 1));
         }
 
-        HashMap<String, Integer> statistics = (HashMap<String, Integer>) Generator.generateStatistics();
+        LinkedHashMap<String, Integer> statistics = (LinkedHashMap<String, Integer>) Generator.generateStatistics();
 
         npc.setWeaponSkill(npc.getRace().getStats().getBasicWeaponSkill()
                 + statistics.get("weaponSkill"));
