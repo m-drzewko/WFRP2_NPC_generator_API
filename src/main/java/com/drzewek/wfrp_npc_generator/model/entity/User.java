@@ -31,7 +31,8 @@ public class User {
     private LocalDateTime joinDate;
     private LocalDateTime lastUpdate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany()
+    @JoinColumn(name = "user_id")
     private List<Npc> savedNpcs;
 
     @Override
