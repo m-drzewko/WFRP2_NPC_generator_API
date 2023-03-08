@@ -2,7 +2,6 @@ package com.drzewek.wfrp_npc_generator.model.response;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;
-
 import java.time.LocalDateTime;
 
 @Getter

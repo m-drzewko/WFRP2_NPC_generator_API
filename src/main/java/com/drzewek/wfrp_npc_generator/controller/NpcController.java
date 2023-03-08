@@ -1,7 +1,5 @@
 package com.drzewek.wfrp_npc_generator.controller;
-
 import com.drzewek.wfrp_npc_generator.model.NpcDto;
-import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.service.NpcService;
 import lombok.RequiredArgsConstructor;

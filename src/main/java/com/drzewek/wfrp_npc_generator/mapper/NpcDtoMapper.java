@@ -4,7 +4,6 @@ import com.drzewek.wfrp_npc_generator.model.Gender;
 import com.drzewek.wfrp_npc_generator.model.NpcDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
-import lombok.AllArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;

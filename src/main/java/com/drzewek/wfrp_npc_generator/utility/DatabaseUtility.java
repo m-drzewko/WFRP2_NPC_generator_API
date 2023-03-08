@@ -5,7 +5,6 @@ import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import java.util.List;
 
