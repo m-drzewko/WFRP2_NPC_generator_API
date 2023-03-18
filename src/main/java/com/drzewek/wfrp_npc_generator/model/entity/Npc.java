@@ -2,8 +2,8 @@ package com.drzewek.wfrp_npc_generator.model.entity;
 
 import com.drzewek.wfrp_npc_generator.model.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
-import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -12,7 +12,6 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Builder
 public class Npc {
 

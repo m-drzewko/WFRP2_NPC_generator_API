@@ -3,7 +3,9 @@ package com.drzewek.wfrp_npc_generator.utility;
 import com.drzewek.wfrp_npc_generator.model.Gender;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

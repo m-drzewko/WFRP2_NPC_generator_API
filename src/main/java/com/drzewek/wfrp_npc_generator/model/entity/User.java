@@ -1,8 +1,7 @@
 package com.drzewek.wfrp_npc_generator.model.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
