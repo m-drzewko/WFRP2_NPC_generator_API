@@ -12,7 +12,7 @@ import com.drzewek.wfrp_npc_generator.utility.RaceUtility;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @AllArgsConstructor

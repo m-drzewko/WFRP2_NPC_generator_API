@@ -3,9 +3,10 @@ package com.drzewek.wfrp_npc_generator.utility;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import javax.annotation.PostConstruct;
+
 import java.util.List;
 
 @Component
