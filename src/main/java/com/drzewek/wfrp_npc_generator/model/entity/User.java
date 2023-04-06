@@ -1,18 +1,20 @@
 package com.drzewek.wfrp_npc_generator.model.entity;
 
+import com.drzewek.wfrp_npc_generator.model.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity
+import java.time.LocalDateTime;
+import java.util.*;
+
+@Entity(name = "user_table")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Builder
 public class User {
 
@@ -27,8 +29,19 @@ public class User {
     private String email;
     @NonNull
     private String password;
+    @ElementCollection(targetClass = Role.class)
+    @Enumerated(EnumType.STRING)
+    private List<Role> roles = new ArrayList<>();
+    @CreationTimestamp
     private LocalDateTime joinDate;
+    @UpdateTimestamp
     private LocalDateTime lastUpdate;
+
+    private boolean isConfirmed = false;
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
 
     @OneToMany()
     @JoinColumn(name = "user_id")

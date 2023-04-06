@@ -3,6 +3,8 @@ package com.drzewek.wfrp_npc_generator.utility;
 import com.drzewek.wfrp_npc_generator.model.Gender;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
@@ -49,7 +51,7 @@ public class Generator {
 
     public static Map<String, Integer> generateStatistics() {
 
-        LinkedHashMap<String, Integer> rolls = new LinkedHashMap<>();
+        HashMap<String, Integer> rolls = new LinkedHashMap<>();
         rolls.put("weaponSkill", generate2d10());
         rolls.put("ballisticSkill", generate2d10());
         rolls.put("strength", generate2d10());
@@ -59,7 +61,7 @@ public class Generator {
         rolls.put("willPower", generate2d10());
         rolls.put("fellowship", generate2d10());
 
-//        apply Shalya's Mercy
+        /* apply Shalya's Mercy */
         AtomicReference<String> lowestStat = new AtomicReference<>("");
         AtomicReference<Integer> lowestRoll = new AtomicReference<>(100);
 

@@ -1,6 +1,7 @@
 package com.drzewek.wfrp_npc_generator.controller;
 
 import com.drzewek.wfrp_npc_generator.model.response.ErrorResponseObject;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +23,12 @@ public class ControllerAdvice {
     @ExceptionHandler(NoSuchElementException.class)
     public ErrorResponseObject noSuchElementException(Exception exception) {
         return new ErrorResponseObject(HttpStatus.NOT_FOUND, exception.getMessage(), LocalDateTime.now());
+    }
+
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    @ExceptionHandler(EntityExistsException.class)
+    public ErrorResponseObject entityExistsException(Exception exception) {
+        return new ErrorResponseObject(HttpStatus.CONFLICT, exception.getMessage(), LocalDateTime.now());
     }
 
 }

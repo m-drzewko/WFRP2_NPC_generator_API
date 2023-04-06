@@ -2,10 +2,14 @@ package com.drzewek.wfrp_npc_generator.utility;
 
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
+import com.drzewek.wfrp_npc_generator.model.entity.User;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
+import com.drzewek.wfrp_npc_generator.service.UserService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -13,6 +17,7 @@ import java.util.List;
 public class DatabaseUtility {
 
     private final RaceService raceService;
+    private final UserService userService;
 
     @PostConstruct
     public void initializeRaceDatabase() {
@@ -138,4 +143,18 @@ public class DatabaseUtility {
         raceService.saveNewRace(dwarf);
         raceService.saveNewRace(halfling);
     }
+
+    @PostConstruct
+    public void initializeUserDatabase() {
+        User testUser = User.builder()
+                .username("test_username_1")
+                .email("testemail@test.com")
+                .password("password")
+                .roles(new ArrayList<>())
+                .isConfirmed(false)
+                .build();
+
+        userService.registerNewUser(testUser);
+    }
+
 }
