@@ -31,7 +31,7 @@ public class User {
     private String password;
     @ElementCollection(targetClass = Role.class)
     @Enumerated(EnumType.STRING)
-    private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime joinDate;
     @UpdateTimestamp
@@ -39,13 +39,13 @@ public class User {
 
     private boolean isConfirmed = false;
 
-    public void addRole(Role role) {
-        roles.add(role);
-    }
-
     @OneToMany()
     @JoinColumn(name = "user_id")
     private List<Npc> savedNpcs;
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
 
     @Override
     public boolean equals(Object o) {

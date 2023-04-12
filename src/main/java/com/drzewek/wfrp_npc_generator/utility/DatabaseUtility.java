@@ -1,17 +1,20 @@
 package com.drzewek.wfrp_npc_generator.utility;
 
+import com.drzewek.wfrp_npc_generator.model.RegistrationDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
-import com.drzewek.wfrp_npc_generator.model.entity.User;
+import com.drzewek.wfrp_npc_generator.model.entity.Token;
+import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import com.drzewek.wfrp_npc_generator.service.UserService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DatabaseUtility {
@@ -146,15 +149,13 @@ public class DatabaseUtility {
 
     @PostConstruct
     public void initializeUserDatabase() {
-        User testUser = User.builder()
-                .username("test_username_1")
-                .email("testemail@test.com")
-                .password("password")
-                .roles(new ArrayList<>())
-                .isConfirmed(false)
-                .build();
+        RegistrationDto testDto = new RegistrationDto("test_username_1",
+                "testemail@test.com", "password");
 
-        userService.registerNewUser(testUser);
+        Token token = userService.registerNewUser(testDto);
+        log.info(token.toString());
+
+        ResponseObject<Object> responseObject = userService.verifyUser(token.getToken());
+        log.info(responseObject.toString());
     }
-
 }

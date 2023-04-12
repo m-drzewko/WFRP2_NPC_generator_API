@@ -31,4 +31,10 @@ public class ControllerAdvice {
         return new ErrorResponseObject(HttpStatus.CONFLICT, exception.getMessage(), LocalDateTime.now());
     }
 
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(SecurityException.class)
+    public ErrorResponseObject securityException(Exception exception) {
+        return new ErrorResponseObject(HttpStatus.UNAUTHORIZED, exception.getMessage(), LocalDateTime.now());
+    }
+
 }
