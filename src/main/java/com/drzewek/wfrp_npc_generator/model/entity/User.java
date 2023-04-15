@@ -23,9 +23,9 @@ public class User {
     @Setter(value = AccessLevel.PACKAGE)
     private Long id;
 
-    @NonNull
+    @Column(nullable = false, unique = true)
     private String username;
-    @NonNull
+    @Column(nullable = false, unique = true)
     private String email;
     @NonNull
     private String password;

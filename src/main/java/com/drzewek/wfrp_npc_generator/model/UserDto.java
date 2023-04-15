@@ -2,6 +2,7 @@ package com.drzewek.wfrp_npc_generator.model;
 
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -13,5 +14,5 @@ public class UserDto {
 
     private String username;
     private String email;
-    private Set<NpcDto> savedNpcs;
+    private List<NpcDto> savedNpcs;
 }

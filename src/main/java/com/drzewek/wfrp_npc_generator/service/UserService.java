@@ -1,5 +1,6 @@
 package com.drzewek.wfrp_npc_generator.service;
 
+import com.drzewek.wfrp_npc_generator.model.MyUserPrincipal;
 import com.drzewek.wfrp_npc_generator.model.RegistrationDto;
 import com.drzewek.wfrp_npc_generator.model.Role;
 import com.drzewek.wfrp_npc_generator.model.TokenType;
@@ -42,7 +43,12 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //TODO
-        return null;
+        User foundUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("No such user exists!"));
+
+        MyUserPrincipal userPrincipal = new MyUserPrincipal(foundUser);
+
+        return userPrincipal;
     }
 
     @Transactional
