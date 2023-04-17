@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +26,6 @@ import java.util.*;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -36,19 +36,27 @@ public class UserService implements UserDetailsService {
 
     private final PasswordEncoder encoder;
 
+    public UserService(UserRepository userRepository, TokenRepository tokenRepository, TokenService tokenService, @Lazy PasswordEncoder encoder) {
+        this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
+        this.tokenService = tokenService;
+        this.encoder = encoder;
+    }
+
     public User saveUser(User user) {
         return userRepository.save(user);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //TODO
         User foundUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("No such user exists!"));
 
-        MyUserPrincipal userPrincipal = new MyUserPrincipal(foundUser);
+        if (!foundUser.isConfirmed()) {
+            throw new EntityNotFoundException("User not verified!");
+        }
 
-        return userPrincipal;
+        return new MyUserPrincipal(foundUser);
     }
 
     @Transactional

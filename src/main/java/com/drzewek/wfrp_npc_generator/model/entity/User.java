@@ -27,7 +27,7 @@ public class User {
     private String username;
     @Column(nullable = false, unique = true)
     private String email;
-    @NonNull
+    @Column(nullable = false)
     private String password;
     @ElementCollection(targetClass = Role.class)
     @Enumerated(EnumType.STRING)

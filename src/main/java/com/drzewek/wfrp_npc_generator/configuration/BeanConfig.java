@@ -1,17 +1,35 @@
 package com.drzewek.wfrp_npc_generator.configuration;
 
+import com.drzewek.wfrp_npc_generator.service.AuthorizationFilter;
+import com.drzewek.wfrp_npc_generator.service.CustomAuthenticationProvider;
+import com.drzewek.wfrp_npc_generator.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Random;
 
 @Configuration
+@AllArgsConstructor
+@EnableWebSecurity
 public class BeanConfig {
+
+    private UserService userService;
+
+    private AuthorizationFilter authorizationFilter;
 
     @Bean
     public Random random() {
@@ -25,12 +43,36 @@ public class BeanConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth
+        /*http.*//*authorizeHttpRequests(auth -> auth
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                )
+                ).*//*
+                cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests().requestMatchers("/**").permitAll().and()
                 .headers(headers -> headers.frameOptions().disable())
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")));
+                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);*/
+        http.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests().requestMatchers("/**").permitAll()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(Customizer.withDefaults());
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new CustomAuthenticationProvider(userService, passwordEncoder());
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 }
