@@ -1,5 +1,6 @@
 package com.drzewek.wfrp_npc_generator.configuration;
 
+import com.drzewek.wfrp_npc_generator.model.Role;
 import com.drzewek.wfrp_npc_generator.service.AuthorizationFilter;
 import com.drzewek.wfrp_npc_generator.service.CustomAuthenticationProvider;
 import com.drzewek.wfrp_npc_generator.service.UserService;
@@ -31,6 +32,7 @@ public class BeanConfig {
 
     private AuthorizationFilter authorizationFilter;
 
+    private static final String[] USER_ENDPOINTS = {"/npc/**", "/race/**"};
     @Bean
     public Random random() {
         return new Random();
@@ -43,19 +45,12 @@ public class BeanConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        /*http.*//*authorizeHttpRequests(auth -> auth
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                ).*//*
-                cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests().requestMatchers("/**").permitAll().and()
-                .headers(headers -> headers.frameOptions().disable())
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);*/
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests().requestMatchers("/**").permitAll()
+                .authorizeHttpRequests().requestMatchers("/auth/**").permitAll()
+                .and()
+                .authorizeHttpRequests().requestMatchers(USER_ENDPOINTS)
+                .hasAnyAuthority(Role.USER.toString(), Role.CONFIRMED_USER.toString(), Role.ADMIN.toString())
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

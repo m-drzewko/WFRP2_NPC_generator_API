@@ -18,8 +18,7 @@ public abstract class NpcDtoMapper {
     public abstract NpcDto npcToDto (Npc npc);
 
     public Npc dtoToNpc (NpcDto dto) {
-        Npc npc = new Npc();
-        npc.builder()
+        return Npc.builder()
                 .name(dto.getName())
                 .gender(Gender.valueOf(dto.getGender()))
                 .race(raceService.getRaceByName(dto.getName()))
@@ -39,7 +38,5 @@ public abstract class NpcDtoMapper {
                 .wounds(dto.getWounds())
                 .movement(dto.getMovement())
                 .build();
-
-        return npc;
     }
 }
