@@ -32,6 +32,8 @@ public class BeanConfig {
 
     private AuthorizationFilter authorizationFilter;
 
+    private static final String[] PUBLIC_ENDPOINTS = {"/user/register/**","/auth/**"};
+
     private static final String[] USER_ENDPOINTS = {"/npc/**", "/race/**"};
     @Bean
     public Random random() {
@@ -45,9 +47,11 @@ public class BeanConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors(Customizer.withDefaults())
+        //TODO change this so that only ADMIN users can access H2 console
+        http.authorizeHttpRequests(auth -> auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll())
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests().requestMatchers("/auth/**").permitAll()
+                .authorizeHttpRequests().requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers(USER_ENDPOINTS)
                 .hasAnyAuthority(Role.USER.toString(), Role.CONFIRMED_USER.toString(), Role.ADMIN.toString())

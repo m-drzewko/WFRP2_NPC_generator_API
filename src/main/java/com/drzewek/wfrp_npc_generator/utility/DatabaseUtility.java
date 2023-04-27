@@ -10,6 +10,7 @@ import com.drzewek.wfrp_npc_generator.service.UserService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -152,10 +153,10 @@ public class DatabaseUtility {
         RegistrationDto testDto = new RegistrationDto("test_username_1",
                 "testemail@test.com", "password");
 
-        Token token = userService.registerNewUser(testDto);
-        log.info(token.toString());
+        ResponseObject<Token> tokenObject = userService.registerNewUser(testDto);
+        log.info(tokenObject.toString());
 
-        ResponseObject<Object> responseObject = userService.verifyUser(token.getToken());
+        ResponseObject<Object> responseObject = userService.verifyUser(tokenObject.getObject().getToken());
         log.info(responseObject.toString());
     }
 }

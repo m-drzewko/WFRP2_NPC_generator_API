@@ -7,6 +7,7 @@ import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +19,9 @@ public class UserController {
 
     final private UserService userService;
 
+    @PostMapping("/register")
     public ResponseObject<Token> registerNewUser(@RequestBody RegistrationDto dto) {
-
-        Token token = userService.registerNewUser(dto);
-
-        return new ResponseObject<Token>(HttpStatus.ACCEPTED,
-                "Returning token", token);
+        return userService.registerNewUser(dto);
     }
 
     //TODO create verification controller
