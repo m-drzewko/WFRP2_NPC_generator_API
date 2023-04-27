@@ -1,5 +1,6 @@
 package com.drzewek.wfrp_npc_generator.service;
 
+import com.drzewek.wfrp_npc_generator.model.TokenType;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
 import com.drzewek.wfrp_npc_generator.repository.TokenRepository;
 import lombok.AllArgsConstructor;
@@ -40,4 +41,15 @@ public class TokenService {
         }
     }
 
+    public boolean validateToken(Token token, TokenType type) throws SecurityException {
+        if (isExpired(token)) {
+            throw new SecurityException("TOKEN EXPIRED!");
+        } else if (token.getTokenType() != type) {
+            throw new SecurityException("INVALID TOKEN TYPE!");
+        } else if (token.isUsed()) {
+            throw new SecurityException("TOKEN ALREADY USED!");
+        } else {
+            return true;
+        }
+    }
 }

@@ -93,7 +93,7 @@ public class UserService implements UserDetailsService {
             throw new SecurityException("USER ALREADY CONFIRMED!");
         }
 
-        if (tokenService.isExpired(checkToken)) {
+        /*if (tokenService.isExpired(checkToken)) {
             throw new SecurityException("TOKEN EXPIRED!");
         }
 
@@ -103,7 +103,9 @@ public class UserService implements UserDetailsService {
 
         if (checkToken.isUsed()) {
             throw new SecurityException("TOKEN ALREADY USED!");
-        }
+        }*/
+
+        tokenService.validateToken(checkToken, TokenType.VERIFY_ACCOUNT);
 
         checkToken.setUsed(true);
         userToVerify.setConfirmed(true);

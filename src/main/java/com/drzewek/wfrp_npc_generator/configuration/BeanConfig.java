@@ -32,7 +32,7 @@ public class BeanConfig {
 
     private AuthorizationFilter authorizationFilter;
 
-    private static final String[] PUBLIC_ENDPOINTS = {"/user/register/**","/auth/**"};
+    private static final String[] PUBLIC_ENDPOINTS = {"/user/register/**", "/user/verify/**", "/auth/**"};
 
     private static final String[] USER_ENDPOINTS = {"/npc/**", "/race/**"};
     @Bean
