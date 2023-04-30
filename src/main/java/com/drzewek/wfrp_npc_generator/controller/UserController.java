@@ -23,7 +23,6 @@ public class UserController {
         return userService.registerNewUser(dto);
     }
 
-    //TODO create verification controller
     @PatchMapping("/verify")
     public ResponseObject<Object> verifyUser(@RequestBody String token) {
         return userService.verifyUser(token);
