@@ -20,7 +20,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
 import java.util.Random;
 
 @Configuration
@@ -32,9 +36,9 @@ public class BeanConfig {
 
     private AuthorizationFilter authorizationFilter;
 
-    private static final String[] PUBLIC_ENDPOINTS = {"/user/register/**", "/user/verify/**", "/auth/**"};
+    private static final String[] PUBLIC_ENDPOINTS = {"/user/**", "/user/verify/**", "/auth/**", "/race/**", "/npc/generate"};
 
-    private static final String[] USER_ENDPOINTS = {"/npc/**", "/race/**"};
+    private static final String[] USER_ENDPOINTS = {"/npc/**"};
     @Bean
     public Random random() {
         return new Random();
@@ -48,7 +52,7 @@ public class BeanConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         //TODO change this so that only ADMIN users can access H2 console
-        http.authorizeHttpRequests(auth -> auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll())
+        http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests().requestMatchers(PUBLIC_ENDPOINTS).permitAll()
@@ -73,5 +77,17 @@ public class BeanConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Authorization", "Email", "Accept-Language"));
+        configuration.addExposedHeader("access_token");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
