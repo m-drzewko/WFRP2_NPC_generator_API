@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 @Service
@@ -32,6 +33,8 @@ public class UserService implements UserDetailsService {
     private final TokenService tokenService;
 
     private final PasswordEncoder encoder;
+
+    private ResourceBundle applicationMessages = ResourceBundle.getBundle("ApplicationMessages");
 
     public UserService(UserRepository userRepository, TokenService tokenService, @Lazy PasswordEncoder encoder) {
         this.userRepository = userRepository;
@@ -45,20 +48,27 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User foundUser = userRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("No such user exists!"));
+        User foundUser;
+
+        if (username.contains("@")) {
+            foundUser = userRepository.findByEmail(username)
+                    .orElseThrow(() -> new EntityNotFoundException(applicationMessages.getString("error.user.no-such-user")));
+        } else {
+            foundUser = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new EntityNotFoundException(applicationMessages.getString("error.user.no-such-user")));
+        }
 
         if (!foundUser.isConfirmed()) {
-            throw new EntityNotFoundException("User not verified!");
+            throw new EntityNotFoundException(applicationMessages.getString("error.user.not-verified"));
         }
 
         return new MyUserPrincipal(foundUser);
     }
 
     @Transactional
-    public ResponseObject<Token> registerNewUser(RegistrationDto dto) {
+    public ResponseObject<Token> registerNewUser(RegistrationDto dto) throws EntityExistsException {
         if (userRepository.existsByUsernameOrEmail(dto.getUsername(), dto.getEmail())) {
-            throw new EntityExistsException("There already exists a user with this username and email!");
+            throw new EntityExistsException(applicationMessages.getString("error.user.already-exists"));
         } else {
             User newUser = User.builder()
                     .email(dto.getEmail())
@@ -74,10 +84,10 @@ public class UserService implements UserDetailsService {
             tokenService.save(verificationToken);
 
             User savedUser = saveUser(newUser);
-            if (savedUser.equals(null)) {
+            if (savedUser == null) {
                 return null;
             } else {
-                return new ResponseObject<>(HttpStatus.CREATED, "USER_REGISTERED", verificationToken);
+                return new ResponseObject<>(HttpStatus.CREATED, applicationMessages.getString("user.registered"), verificationToken);
             }
         }
     }
@@ -87,23 +97,11 @@ public class UserService implements UserDetailsService {
 
         Token checkToken = tokenService.findToken(token);
         User userToVerify = userRepository.findByEmail(checkToken.getEmail())
-                .orElseThrow(() -> new EntityNotFoundException("NO SUCH USER EXISTS!"));
+                .orElseThrow(() -> new EntityNotFoundException(applicationMessages.getString("error.user.no-such-user")));
 
         if (userToVerify.isConfirmed()) {
-            throw new SecurityException("USER ALREADY CONFIRMED!");
+            throw new SecurityException(applicationMessages.getString("error.user.already-confirmed"));
         }
-
-        /*if (tokenService.isExpired(checkToken)) {
-            throw new SecurityException("TOKEN EXPIRED!");
-        }
-
-        if (checkToken.getTokenType() != TokenType.VERIFY_ACCOUNT) {
-            throw new SecurityException("INVALID TOKEN TYPE!");
-        }
-
-        if (checkToken.isUsed()) {
-            throw new SecurityException("TOKEN ALREADY USED!");
-        }*/
 
         tokenService.validateToken(checkToken, TokenType.VERIFY_ACCOUNT);
 
@@ -114,6 +112,6 @@ public class UserService implements UserDetailsService {
         saveUser(userToVerify);
 
         return new ResponseObject<>(HttpStatus.ACCEPTED,
-                "User verified", null);
+                applicationMessages.getString("user.verified"), null);
     }
 }

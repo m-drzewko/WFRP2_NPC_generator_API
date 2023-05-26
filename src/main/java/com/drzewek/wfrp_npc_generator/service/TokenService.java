@@ -4,23 +4,27 @@ import com.drzewek.wfrp_npc_generator.model.TokenType;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
 import com.drzewek.wfrp_npc_generator.repository.TokenRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.NoSuchElementException;
+import java.util.ResourceBundle;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TokenService {
 
-    private TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
+
+    private ResourceBundle applicationMessages = ResourceBundle.getBundle("ApplicationMessages");
 
     public Token findToken(String token) throws NoSuchElementException {
 
         if (!tokenRepository.existsByToken(token)) {
-            throw new NoSuchElementException("Token does not exist!");
+            throw new NoSuchElementException(applicationMessages.getString("error.token.no-such-token"));
         }
 
         return tokenRepository.findByToken(token);
@@ -43,11 +47,11 @@ public class TokenService {
 
     public boolean validateToken(Token token, TokenType type) throws SecurityException {
         if (isExpired(token)) {
-            throw new SecurityException("TOKEN EXPIRED!");
+            throw new SecurityException(applicationMessages.getString("error.token.expired"));
         } else if (token.getTokenType() != type) {
-            throw new SecurityException("INVALID TOKEN TYPE!");
+            throw new SecurityException(applicationMessages.getString("error.token.invalid-type"));
         } else if (token.isUsed()) {
-            throw new SecurityException("TOKEN ALREADY USED!");
+            throw new SecurityException(applicationMessages.getString("error.token.used"));
         } else {
             return true;
         }

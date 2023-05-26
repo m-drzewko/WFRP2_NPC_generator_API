@@ -1,8 +1,7 @@
 package com.drzewek.wfrp_npc_generator.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.control.MappingControl;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,14 +11,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ResourceBundle;
+
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
+
+    private ResourceBundle applicationMessages = ResourceBundle.getBundle("ApplicationMessages");
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         log.info("Attempting authentication: {}", authentication.toString());
@@ -28,7 +32,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             return new UsernamePasswordAuthenticationToken(authentication.getName(),
                     authentication.getCredentials().toString(), userDetails.getAuthorities());
         } else {
-            throw new BadCredentialsException("Incorrect password!");
+            throw new BadCredentialsException(applicationMessages.getString("error.password.incorrect-password"));
         }
     }
 
