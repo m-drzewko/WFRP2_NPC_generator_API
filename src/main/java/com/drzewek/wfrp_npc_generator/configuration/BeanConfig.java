@@ -35,7 +35,7 @@ public class BeanConfig {
 
     private AuthorizationFilter authorizationFilter;
 
-    private static final String[] PUBLIC_ENDPOINTS = {"/user/**", "/user/verify/**", "/auth/**", "/race/**", "/npc/generate"};
+    private static final String[] PUBLIC_ENDPOINTS = {"/user/register", "/user/verify", "/auth/**", "/race/**", "/npc/generate"};
 
     private static final String[] USER_ENDPOINTS = {"/npc/**"};
     @Bean
@@ -82,7 +82,7 @@ public class BeanConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(List.of("GET", "POST"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PATCH"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Authorization", "Email", "Accept-Language"));
         configuration.addExposedHeader("access_token");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

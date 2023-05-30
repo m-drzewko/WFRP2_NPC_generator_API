@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PatchMapping("/verify")
-    public ResponseObject<Object> verifyUser(@RequestBody String token) {
+    public ResponseObject<Object> verifyUser(@RequestParam String token) {
         return userService.verifyUser(token);
     }
 }
