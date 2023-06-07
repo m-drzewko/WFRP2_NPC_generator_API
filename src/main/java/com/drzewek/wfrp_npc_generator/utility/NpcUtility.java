@@ -6,9 +6,7 @@ import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

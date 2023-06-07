@@ -1,19 +1,27 @@
 package com.drzewek.wfrp_npc_generator.utility;
 
+import com.drzewek.wfrp_npc_generator.model.RegistrationDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
+import com.drzewek.wfrp_npc_generator.model.entity.Token;
+import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
+import com.drzewek.wfrp_npc_generator.service.UserService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DatabaseUtility {
 
     private final RaceService raceService;
+    private final UserService userService;
 
     @PostConstruct
     public void initializeRaceDatabase() {
@@ -138,5 +146,17 @@ public class DatabaseUtility {
         raceService.saveNewRace(human);
         raceService.saveNewRace(dwarf);
         raceService.saveNewRace(halfling);
+    }
+
+    @PostConstruct
+    public void initializeUserDatabase() {
+        RegistrationDto testDto = new RegistrationDto("test_username_1",
+                "testemail@test.com", "password");
+
+        ResponseObject<Token> tokenObject = userService.registerNewUser(testDto);
+        log.info(tokenObject.toString());
+
+        ResponseObject<Object> responseObject = userService.verifyUser(tokenObject.getObject().getToken());
+        log.info(responseObject.toString());
     }
 }

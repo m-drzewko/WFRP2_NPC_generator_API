@@ -9,10 +9,10 @@ import com.drzewek.wfrp_npc_generator.repository.NpcRepository;
 import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
 import com.drzewek.wfrp_npc_generator.utility.NpcUtility;
 import com.drzewek.wfrp_npc_generator.utility.RaceUtility;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import javax.persistence.EntityNotFoundException;
 
 @Service
 @AllArgsConstructor
