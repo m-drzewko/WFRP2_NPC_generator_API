@@ -80,12 +80,13 @@ public class UserService implements UserDetailsService {
 
             String token = UUID.randomUUID().toString();
             Token verificationToken = new Token(token, TokenType.VERIFY_ACCOUNT, newUser.getEmail());
-            log.info("verification token = " + verificationToken.getToken());
+            log.info("User: " + newUser.getUsername() + "\n" + "Verification token = " + verificationToken.getToken());
             tokenService.save(verificationToken);
 
             User savedUser = saveUser(newUser);
+
             if (savedUser == null) {
-                return null;
+                throw new UnsupportedOperationException(applicationMessages.getString("error.general"));
             } else {
                 return new ResponseObject<>(HttpStatus.CREATED, applicationMessages.getString("user.registered"), verificationToken);
             }

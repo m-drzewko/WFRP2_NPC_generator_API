@@ -25,8 +25,8 @@ import java.util.Collection;
 @Service
 public class AuthorizationFilter extends OncePerRequestFilter {
 
-    @Value("${jwt.secret}")
-    private String secret = "coś";
+    @Value("${jwt.secret:my_secret}")
+    private String secret;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

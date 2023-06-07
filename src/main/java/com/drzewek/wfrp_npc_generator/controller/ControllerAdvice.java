@@ -37,4 +37,10 @@ public class ControllerAdvice {
         return new ErrorResponseObject(HttpStatus.UNAUTHORIZED, exception.getMessage(), LocalDateTime.now());
     }
 
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ErrorResponseObject unsupportedOperationException(Exception exception) {
+        return new ErrorResponseObject(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), LocalDateTime.now());
+    }
+
 }
