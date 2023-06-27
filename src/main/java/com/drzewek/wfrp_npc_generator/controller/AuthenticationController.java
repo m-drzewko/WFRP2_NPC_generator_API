@@ -21,4 +21,6 @@ public class AuthenticationController {
     public ResponseEntity<Void> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         return service.authenticate(loginDto, response);
     }
+
+    //TODO add endpoint to refresh JWT when it's expired
 }

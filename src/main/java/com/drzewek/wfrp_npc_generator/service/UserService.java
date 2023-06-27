@@ -8,6 +8,7 @@ import com.drzewek.wfrp_npc_generator.model.entity.Token;
 import com.drzewek.wfrp_npc_generator.model.entity.User;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -29,17 +30,17 @@ import java.util.UUID;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
     private final TokenService tokenService;
-
     private final PasswordEncoder encoder;
+    private final EmailSenderService emailService;
 
     private ResourceBundle applicationMessages = ResourceBundle.getBundle("ApplicationMessages");
 
-    public UserService(UserRepository userRepository, TokenService tokenService, @Lazy PasswordEncoder encoder) {
+    public UserService(UserRepository userRepository, TokenService tokenService, @Lazy PasswordEncoder encoder, EmailSenderService emailService) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
         this.encoder = encoder;
+        this.emailService = emailService;
     }
 
     public User saveUser(User user) {
@@ -66,7 +67,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public ResponseObject<Token> registerNewUser(RegistrationDto dto) throws EntityExistsException {
+    public ResponseObject<Token> registerNewUser(RegistrationDto dto, String language) throws EntityExistsException {
         if (userRepository.existsByUsernameOrEmail(dto.getUsername(), dto.getEmail())) {
             throw new EntityExistsException(applicationMessages.getString("error.user.already-exists"));
         } else {
@@ -88,6 +89,7 @@ public class UserService implements UserDetailsService {
             if (savedUser == null) {
                 throw new UnsupportedOperationException(applicationMessages.getString("error.general"));
             } else {
+                emailService.sendVerificationEmail(savedUser.getUsername(), savedUser.getEmail(), verificationToken.getToken(), language);
                 return new ResponseObject<>(HttpStatus.CREATED, applicationMessages.getString("user.registered"), verificationToken);
             }
         }
@@ -108,6 +110,7 @@ public class UserService implements UserDetailsService {
 
         checkToken.setUsed(true);
         userToVerify.setConfirmed(true);
+        userToVerify.addRole(Role.CONFIRMED_USER);
 
         tokenService.save(checkToken);
         saveUser(userToVerify);

@@ -1,18 +1,24 @@
 package com.drzewek.wfrp_npc_generator.utility;
 
 import com.drzewek.wfrp_npc_generator.model.RegistrationDto;
+import com.drzewek.wfrp_npc_generator.model.Role;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
+import com.drzewek.wfrp_npc_generator.model.entity.User;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
+import com.drzewek.wfrp_npc_generator.repository.UserRepository;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
 import com.drzewek.wfrp_npc_generator.service.UserService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
@@ -21,7 +27,8 @@ import java.util.List;
 public class DatabaseUtility {
 
     private final RaceService raceService;
-    private final UserService userService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @PostConstruct
     public void initializeRaceDatabase() {
@@ -150,13 +157,15 @@ public class DatabaseUtility {
 
     @PostConstruct
     public void initializeUserDatabase() {
-        RegistrationDto testDto = new RegistrationDto("test_username_1",
-                "testemail@test.com", "password");
+        User testUser = User.builder()
+                .username("test_username_1")
+                .email("testemail@test.com")
+                .password(encoder.encode("password"))
+                .roles(new HashSet<>(Arrays.asList(Role.USER, Role.CONFIRMED_USER)))
+                .isConfirmed(true)
+                .build();
 
-        ResponseObject<Token> tokenObject = userService.registerNewUser(testDto);
-        log.info(tokenObject.toString());
-
-        ResponseObject<Object> responseObject = userService.verifyUser(tokenObject.getObject().getToken());
-        log.info(responseObject.toString());
+        log.info(testUser.toString());
+        userRepository.save(testUser);
     }
 }

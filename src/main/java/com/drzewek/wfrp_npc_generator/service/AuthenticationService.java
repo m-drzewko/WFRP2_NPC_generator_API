@@ -24,4 +24,6 @@ public class AuthenticationService {
         jwtService.setHttpHeaders(authenticate, response);
         return ResponseEntity.ok(null);
     }
+
+    //TODO implement method to refresh expired JWT using generateJWTRefreshToken() from JwtService
 }
