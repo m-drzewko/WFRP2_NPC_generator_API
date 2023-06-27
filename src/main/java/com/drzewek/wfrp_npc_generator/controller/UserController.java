@@ -1,9 +1,11 @@
 package com.drzewek.wfrp_npc_generator.controller;
 
+import com.drzewek.wfrp_npc_generator.model.NpcDto;
 import com.drzewek.wfrp_npc_generator.model.RegistrationDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +27,10 @@ public class UserController {
     @PatchMapping("/verify")
     public ResponseObject<Object> verifyUser(@RequestParam String token) {
         return userService.verifyUser(token);
+    }
+
+    @PostMapping("/auth/save/new-npc")
+    public ResponseObject<String> saveNpc(@RequestBody NpcDto npc, HttpServletRequest request) {
+        return userService.saveNpc(npc, request);
     }
 }

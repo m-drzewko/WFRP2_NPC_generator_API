@@ -1,6 +1,7 @@
 package com.drzewek.wfrp_npc_generator.service;
 
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,14 @@ public class JwtService {
         Algorithm algorithm = Algorithm.HMAC256(secret);
         String accessToken = generateJWToken(user, date, algorithm);
         response.addHeader("Access_Token", accessToken);
+    }
+
+    public String decodeUsername(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        token = token.substring(7);
+        DecodedJWT decodedToken = verifier.verify(token);
+        String subject = decodedToken.getSubject();
+        return subject;
     }
 }

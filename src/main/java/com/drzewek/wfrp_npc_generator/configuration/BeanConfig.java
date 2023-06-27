@@ -38,7 +38,7 @@ public class BeanConfig {
     private static final String[] PUBLIC_ENDPOINTS = {"/user/register", "/user/verify",
             "/auth/**", "/race/**", "/npc/generate", "/email-test/send"};
 
-    private static final String[] USER_ENDPOINTS = {"/npc/**"};
+    private static final String[] USER_ENDPOINTS = {"/npc/**", "/user/auth/**"};
     @Bean
     public Random random() {
         return new Random();

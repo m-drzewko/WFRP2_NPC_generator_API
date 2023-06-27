@@ -21,7 +21,7 @@ public abstract class NpcDtoMapper {
         return Npc.builder()
                 .name(dto.getName())
                 .gender(Gender.valueOf(dto.getGender()))
-                .race(raceService.getRaceByName(dto.getName()))
+                .race(raceService.getRaceByName(dto.getRaceName()))
                 .height(dto.getHeight())
                 .weight(dto.getWeight())
                 .age(dto.getAge())

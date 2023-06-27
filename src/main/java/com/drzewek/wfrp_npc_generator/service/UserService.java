@@ -1,16 +1,17 @@
 package com.drzewek.wfrp_npc_generator.service;
 
-import com.drzewek.wfrp_npc_generator.model.MyUserPrincipal;
-import com.drzewek.wfrp_npc_generator.model.RegistrationDto;
-import com.drzewek.wfrp_npc_generator.model.Role;
-import com.drzewek.wfrp_npc_generator.model.TokenType;
+import com.drzewek.wfrp_npc_generator.mapper.NpcDtoMapper;
+import com.drzewek.wfrp_npc_generator.mapper.NpcDtoMapperImpl;
+import com.drzewek.wfrp_npc_generator.model.*;
+import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
 import com.drzewek.wfrp_npc_generator.model.entity.User;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
+import com.drzewek.wfrp_npc_generator.repository.NpcRepository;
 import com.drzewek.wfrp_npc_generator.repository.UserRepository;
-import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -22,25 +23,34 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
+    private final NpcRepository npcRepository;
+    private final NpcDtoMapper npcDtoMapper;
 
     private final UserRepository userRepository;
     private final TokenService tokenService;
     private final PasswordEncoder encoder;
     private final EmailSenderService emailService;
+    private final JwtService jwtService;
 
     private ResourceBundle applicationMessages = ResourceBundle.getBundle("ApplicationMessages");
 
-    public UserService(UserRepository userRepository, TokenService tokenService, @Lazy PasswordEncoder encoder, EmailSenderService emailService) {
+    public UserService(UserRepository userRepository, TokenService tokenService, @Lazy PasswordEncoder encoder, EmailSenderService emailService, JwtService jwtService,
+                       NpcDtoMapper npcDtoMapper,
+                       NpcRepository npcRepository) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
         this.encoder = encoder;
         this.emailService = emailService;
+        this.jwtService = jwtService;
+        this.npcDtoMapper = npcDtoMapper;
+        this.npcRepository = npcRepository;
     }
 
     public User saveUser(User user) {
@@ -117,5 +127,17 @@ public class UserService implements UserDetailsService {
 
         return new ResponseObject<>(HttpStatus.ACCEPTED,
                 applicationMessages.getString("user.verified"), null);
+    }
+
+    @Transactional
+    public ResponseObject<String> saveNpc(NpcDto npc, HttpServletRequest request) {
+        String username = jwtService.decodeUsername(request.getHeader("Authorization"));
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new NoSuchElementException(applicationMessages
+                        .getString("error.user.no-such-user")));
+        Npc newNpc = npcDtoMapper.dtoToNpc(npc);
+        user.getSavedNpcs().add(newNpc);
+        userRepository.save(user);
+        return new ResponseObject<>(HttpStatus.ACCEPTED, "Npc saved for user " + user.getUsername(), "");
     }
 }
