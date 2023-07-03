@@ -29,8 +29,8 @@ public class UserController {
         return userService.verifyUser(token);
     }
 
-    @PostMapping("/auth/save/new-npc")
-    public ResponseObject<String> saveNpc(@RequestBody NpcDto npc, HttpServletRequest request) {
+    @PostMapping("/auth/npc/save")
+    public ResponseObject<Void> saveNpc(@RequestBody NpcDto npc, HttpServletRequest request) {
         return userService.saveNpc(npc, request);
     }
 }

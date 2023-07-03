@@ -1,7 +1,6 @@
 package com.drzewek.wfrp_npc_generator.service;
 
 import com.drzewek.wfrp_npc_generator.mapper.NpcDtoMapper;
-import com.drzewek.wfrp_npc_generator.mapper.NpcDtoMapperImpl;
 import com.drzewek.wfrp_npc_generator.model.*;
 import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
@@ -30,9 +29,8 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
-    private final NpcRepository npcRepository;
-    private final NpcDtoMapper npcDtoMapper;
 
+    private final NpcDtoMapper npcDtoMapper;
     private final UserRepository userRepository;
     private final TokenService tokenService;
     private final PasswordEncoder encoder;
@@ -41,16 +39,15 @@ public class UserService implements UserDetailsService {
 
     private ResourceBundle applicationMessages = ResourceBundle.getBundle("ApplicationMessages");
 
-    public UserService(UserRepository userRepository, TokenService tokenService, @Lazy PasswordEncoder encoder, EmailSenderService emailService, JwtService jwtService,
-                       NpcDtoMapper npcDtoMapper,
-                       NpcRepository npcRepository) {
+    public UserService(UserRepository userRepository, TokenService tokenService,
+                       @Lazy PasswordEncoder encoder, EmailSenderService emailService,
+                       JwtService jwtService, NpcDtoMapper npcDtoMapper) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
         this.encoder = encoder;
         this.emailService = emailService;
         this.jwtService = jwtService;
         this.npcDtoMapper = npcDtoMapper;
-        this.npcRepository = npcRepository;
     }
 
     public User saveUser(User user) {
@@ -130,14 +127,14 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public ResponseObject<String> saveNpc(NpcDto npc, HttpServletRequest request) {
+    public ResponseObject<Void> saveNpc(NpcDto npc, HttpServletRequest request) {
         String username = jwtService.decodeUsername(request.getHeader("Authorization"));
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new NoSuchElementException(applicationMessages
-                        .getString("error.user.no-such-user")));
+                () -> new NoSuchElementException(
+                        applicationMessages.getString("error.user.no-such-user")));
         Npc newNpc = npcDtoMapper.dtoToNpc(npc);
         user.getSavedNpcs().add(newNpc);
         userRepository.save(user);
-        return new ResponseObject<>(HttpStatus.ACCEPTED, "Npc saved for user " + user.getUsername(), "");
+        return new ResponseObject<>(HttpStatus.ACCEPTED, "Npc " + newNpc.getName() + " saved for user " + user.getUsername(), null);
     }
 }
