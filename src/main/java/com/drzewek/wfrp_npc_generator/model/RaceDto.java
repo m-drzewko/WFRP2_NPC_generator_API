@@ -1,7 +1,6 @@
 package com.drzewek.wfrp_npc_generator.model;
 
 import lombok.*;
-
 import java.util.List;
 
 @AllArgsConstructor

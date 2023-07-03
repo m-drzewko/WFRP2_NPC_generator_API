@@ -1,19 +1,34 @@
 package com.drzewek.wfrp_npc_generator.utility;
 
+import com.drzewek.wfrp_npc_generator.model.RegistrationDto;
+import com.drzewek.wfrp_npc_generator.model.Role;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
 import com.drzewek.wfrp_npc_generator.model.entity.RaceStats;
+import com.drzewek.wfrp_npc_generator.model.entity.Token;
+import com.drzewek.wfrp_npc_generator.model.entity.User;
+import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
+import com.drzewek.wfrp_npc_generator.repository.UserRepository;
 import com.drzewek.wfrp_npc_generator.service.RaceService;
+import com.drzewek.wfrp_npc_generator.service.UserService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DatabaseUtility {
 
     private final RaceService raceService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @PostConstruct
     public void initializeRaceDatabase() {
@@ -138,5 +153,19 @@ public class DatabaseUtility {
         raceService.saveNewRace(human);
         raceService.saveNewRace(dwarf);
         raceService.saveNewRace(halfling);
+    }
+
+    @PostConstruct
+    public void initializeUserDatabase() {
+        User testUser = User.builder()
+                .username("test_username_1")
+                .email("testemail@test.com")
+                .password(encoder.encode("password"))
+                .roles(new HashSet<>(Arrays.asList(Role.USER, Role.CONFIRMED_USER)))
+                .isConfirmed(true)
+                .build();
+
+        log.info(testUser.toString());
+        userRepository.save(testUser);
     }
 }
