@@ -36,13 +36,13 @@ public class NpcService {
 
         if (raceName.equals(RANDOM) && gender.equals(RANDOM)) {
             generatedNpc = NpcUtility.generateNpc(lang, null, raceUtility.generateRace());
-        } else if (raceName.equals("random")) {
+        } else if (raceName.equals(RANDOM)) {
             if (gender.equals("male")) {
                 generatedNpc = NpcUtility.generateNpc(lang, Gender.MALE, raceUtility.generateRace());
             } else if (gender.equals("female")) {
                 generatedNpc = NpcUtility.generateNpc(lang, Gender.FEMALE, raceUtility.generateRace());
             } else throw new EntityNotFoundException("Gender " + gender + " does not exist!");
-        } else if (gender.equals("random")) {
+        } else if (gender.equals(RANDOM)) {
             String raceToFind = raceName.toLowerCase();
             raceToFind = StringUtils.capitalize(raceToFind);
             Race raceToAssign = raceRepository.findByName(raceToFind)
@@ -60,9 +60,7 @@ public class NpcService {
             } else throw new EntityNotFoundException("Gender " + gender + " does not exist!");
         }
 
-        NpcDto generatedNpcDto = npcDtoMapper.npcToDto(generatedNpc);
-
-        return generatedNpcDto;
+        return npcDtoMapper.npcToDto(generatedNpc);
     }
 
     public ResponseObject<NpcDto> updateSavedNpc(Long id, NpcDto update) {

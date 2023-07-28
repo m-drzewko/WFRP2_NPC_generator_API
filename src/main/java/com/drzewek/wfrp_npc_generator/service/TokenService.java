@@ -3,12 +3,9 @@ package com.drzewek.wfrp_npc_generator.service;
 import com.drzewek.wfrp_npc_generator.model.TokenType;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
 import com.drzewek.wfrp_npc_generator.repository.TokenRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
@@ -35,14 +32,7 @@ public class TokenService {
     }
 
     public boolean isExpired (Token token) {
-        Calendar calendar = Calendar.getInstance();
-        Date now = calendar.getTime();
-
-        if (token.getExpirationDate().getTime() > new Date().getTime()) {
-            return false;
-        } else {
-            return true;
-        }
+        return token.getExpirationDate().getTime() <= new Date().getTime();
     }
 
     public boolean validateToken(Token token, TokenType type) throws SecurityException {

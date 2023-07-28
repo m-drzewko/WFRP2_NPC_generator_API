@@ -21,10 +21,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.ResourceBundle;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -126,15 +124,28 @@ public class UserService implements UserDetailsService {
                 applicationMessages.getString("user.verified"), null);
     }
 
-    @Transactional
-    public ResponseObject<Void> saveNpc(NpcDto npc, HttpServletRequest request) {
+    public User decodeUserFromJwt(HttpServletRequest request) {
         String username = jwtService.decodeUsername(request.getHeader("Authorization"));
-        User user = userRepository.findByUsername(username).orElseThrow(
+        return userRepository.findByUsername(username).orElseThrow(
                 () -> new NoSuchElementException(
                         applicationMessages.getString("error.user.no-such-user")));
+    }
+
+    @Transactional
+    public ResponseObject<Void> saveNpc(NpcDto npc, HttpServletRequest request) {
+        User user = decodeUserFromJwt(request);
         Npc newNpc = npcDtoMapper.dtoToNpc(npc);
         user.getSavedNpcs().add(newNpc);
         userRepository.save(user);
         return new ResponseObject<>(HttpStatus.ACCEPTED, "Npc " + newNpc.getName() + " saved for user " + user.getUsername(), null);
+    }
+
+    public ResponseObject<List<NpcDto>> getAllSavedNpcs(HttpServletRequest request) {
+        User user = decodeUserFromJwt(request);
+        return new ResponseObject<>(HttpStatus.OK,
+                "Returning all saved NPCs for user " + user.getUsername(),
+                user.getSavedNpcs().stream()
+                        .map(npcDtoMapper::npcToDto)
+                        .collect(Collectors.toList()));
     }
 }

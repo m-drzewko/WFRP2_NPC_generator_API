@@ -8,7 +8,11 @@ import com.drzewek.wfrp_npc_generator.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -32,5 +36,10 @@ public class UserController {
     @PostMapping("/auth/npc/save")
     public ResponseObject<Void> saveNpc(@RequestBody NpcDto npc, HttpServletRequest request) {
         return userService.saveNpc(npc, request);
+    }
+
+    @GetMapping("/auth/npc/getall")
+    public ResponseObject<List<NpcDto>> getAllSavedNpcs(HttpServletRequest request) {
+        return userService.getAllSavedNpcs(request);
     }
 }
