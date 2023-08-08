@@ -5,6 +5,7 @@ import com.drzewek.wfrp_npc_generator.model.*;
 import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
 import com.drzewek.wfrp_npc_generator.model.entity.User;
+import com.drzewek.wfrp_npc_generator.model.response.PageableResponseObject;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.repository.NpcRepository;
 import com.drzewek.wfrp_npc_generator.repository.UserRepository;
@@ -14,6 +15,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,6 +38,7 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder encoder;
     private final EmailSenderService emailService;
     private final JwtService jwtService;
+    private final int pageSize = 5;
 
     private ResourceBundle applicationMessages = ResourceBundle.getBundle("ApplicationMessages");
 
@@ -140,12 +145,23 @@ public class UserService implements UserDetailsService {
         return new ResponseObject<>(HttpStatus.ACCEPTED, "Npc " + newNpc.getName() + " saved for user " + user.getUsername(), null);
     }
 
-    public ResponseObject<List<NpcDto>> getAllSavedNpcs(HttpServletRequest request) {
+    public ResponseObject<List<NpcDto>> getAllSavedNpcs(HttpServletRequest request, int page) {
         User user = decodeUserFromJwt(request);
-        return new ResponseObject<>(HttpStatus.OK,
+
+        PageImpl<Npc> npcPage = createPage(user.getSavedNpcs(), page);
+
+        return new PageableResponseObject<>(HttpStatus.OK,
                 "Returning all saved NPCs for user " + user.getUsername(),
-                user.getSavedNpcs().stream()
+                npcPage.stream()
                         .map(npcDtoMapper::npcToDto)
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()), (user.getSavedNpcs().size() / pageSize) + 1);
+    }
+
+    private PageImpl createPage(List<Npc> npcList, int page) {
+
+        int start = Math.min(page * pageSize, npcList.size());
+        int end = Math.min((page + 1) * pageSize, npcList.size());
+
+        return new PageImpl<>(npcList.subList(start, end), PageRequest.of(page, pageSize), npcList.size());
     }
 }

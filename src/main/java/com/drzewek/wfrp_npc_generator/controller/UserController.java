@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/auth/npc/getall")
-    public ResponseObject<List<NpcDto>> getAllSavedNpcs(HttpServletRequest request) {
-        return userService.getAllSavedNpcs(request);
+    public ResponseObject<List<NpcDto>> getAllSavedNpcs(HttpServletRequest request, @RequestParam(defaultValue = "0") int page) {
+        return userService.getAllSavedNpcs(request, page);
     }
 }
