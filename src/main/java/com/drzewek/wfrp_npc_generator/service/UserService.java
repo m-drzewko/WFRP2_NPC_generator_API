@@ -7,7 +7,6 @@ import com.drzewek.wfrp_npc_generator.model.entity.Token;
 import com.drzewek.wfrp_npc_generator.model.entity.User;
 import com.drzewek.wfrp_npc_generator.model.response.PageableResponseObject;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
-import com.drzewek.wfrp_npc_generator.repository.NpcRepository;
 import com.drzewek.wfrp_npc_generator.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,9 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,19 +34,20 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder encoder;
     private final EmailSenderService emailService;
     private final JwtService jwtService;
-    private final int pageSize = 5;
+    private final NpcService npcService;
 
     private ResourceBundle applicationMessages = ResourceBundle.getBundle("ApplicationMessages");
 
     public UserService(UserRepository userRepository, TokenService tokenService,
                        @Lazy PasswordEncoder encoder, EmailSenderService emailService,
-                       JwtService jwtService, NpcDtoMapper npcDtoMapper) {
+                       JwtService jwtService, NpcDtoMapper npcDtoMapper, NpcService npcService) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
         this.encoder = encoder;
         this.emailService = emailService;
         this.jwtService = jwtService;
         this.npcDtoMapper = npcDtoMapper;
+        this.npcService = npcService;
     }
 
     public User saveUser(User user) {
@@ -141,6 +138,7 @@ public class UserService implements UserDetailsService {
         User user = decodeUserFromJwt(request);
         Npc newNpc = npcDtoMapper.dtoToNpc(npc);
         user.getSavedNpcs().add(newNpc);
+        newNpc.setUser(user);
         userRepository.save(user);
         return new ResponseObject<>(HttpStatus.ACCEPTED, "Npc " + newNpc.getName() + " saved for user " + user.getUsername(), null);
     }
@@ -148,20 +146,10 @@ public class UserService implements UserDetailsService {
     public ResponseObject<List<NpcDto>> getAllSavedNpcs(HttpServletRequest request, int page) {
         User user = decodeUserFromJwt(request);
 
-        PageImpl<Npc> npcPage = createPage(user.getSavedNpcs(), page);
+        PageableResponseObject<List<NpcDto>> responseObject = npcService.getNpcPage(user.getId(), page);
 
-        return new PageableResponseObject<>(HttpStatus.OK,
-                "Returning all saved NPCs for user " + user.getUsername(),
-                npcPage.stream()
-                        .map(npcDtoMapper::npcToDto)
-                        .collect(Collectors.toList()), (user.getSavedNpcs().size() / pageSize) + 1);
-    }
+        responseObject.setMessage("Returning page " + page + " of NPCs for user " + user.getUsername());
 
-    private PageImpl createPage(List<Npc> npcList, int page) {
-
-        int start = Math.min(page * pageSize, npcList.size());
-        int end = Math.min((page + 1) * pageSize, npcList.size());
-
-        return new PageImpl<>(npcList.subList(start, end), PageRequest.of(page, pageSize), npcList.size());
+        return responseObject;
     }
 }

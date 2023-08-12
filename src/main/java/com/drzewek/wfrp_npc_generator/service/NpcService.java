@@ -5,6 +5,7 @@ import com.drzewek.wfrp_npc_generator.model.Gender;
 import com.drzewek.wfrp_npc_generator.model.NpcDto;
 import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.entity.Race;
+import com.drzewek.wfrp_npc_generator.model.response.PageableResponseObject;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
 import com.drzewek.wfrp_npc_generator.repository.NpcRepository;
 import com.drzewek.wfrp_npc_generator.repository.RaceRepository;
@@ -12,10 +13,13 @@ import com.drzewek.wfrp_npc_generator.utility.NpcUtility;
 import com.drzewek.wfrp_npc_generator.utility.RaceUtility;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
@@ -29,6 +33,7 @@ public class NpcService {
     private static final String RANDOM = "random";
     private RaceUtility raceUtility;
     private final NpcDtoMapper npcDtoMapper;
+    private final int pageSize = 5;
 
     public NpcDto generateNpc(String lang, String raceName, String gender) {
 
@@ -100,5 +105,15 @@ public class NpcService {
     public ResponseObject<Void> deleteSavedNpc(Long id) {
         npcRepository.deleteById(id);
         return new ResponseObject<>(HttpStatus.NO_CONTENT, "Deleted npc " + id, null);
+    }
+
+    public PageableResponseObject<List<NpcDto>> getNpcPage(Long userId, int page) {
+        PageRequest request = PageRequest.of(page, pageSize);
+
+        Page<Npc> npcPage = npcRepository.findByUserId(userId, request);
+
+        return new PageableResponseObject<>(HttpStatus.OK,
+                "",
+                npcPage.map(npcDtoMapper::npcToDto).toList(), npcPage.getTotalPages());
     }
 }

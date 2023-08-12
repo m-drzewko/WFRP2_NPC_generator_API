@@ -40,7 +40,6 @@ public class User {
     private boolean isConfirmed = false;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
     private List<Npc> savedNpcs;
 
     public void addRole(Role role) {
