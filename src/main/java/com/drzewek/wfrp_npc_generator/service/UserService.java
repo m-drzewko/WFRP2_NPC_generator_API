@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
 
     public UserService(UserRepository userRepository, TokenService tokenService,
                        @Lazy PasswordEncoder encoder, EmailSenderService emailService,
-                       JwtService jwtService, NpcDtoMapper npcDtoMapper, NpcService npcService) {
+                       JwtService jwtService, NpcDtoMapper npcDtoMapper, @Lazy NpcService npcService) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
         this.encoder = encoder;
