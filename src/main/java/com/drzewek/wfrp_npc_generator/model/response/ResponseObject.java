@@ -1,7 +1,6 @@
 package com.drzewek.wfrp_npc_generator.model.response;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
 
 @Getter

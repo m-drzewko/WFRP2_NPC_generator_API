@@ -2,20 +2,14 @@ package com.drzewek.wfrp_npc_generator.controller;
 
 import com.drzewek.wfrp_npc_generator.model.NpcDto;
 import com.drzewek.wfrp_npc_generator.model.RegistrationDto;
-import com.drzewek.wfrp_npc_generator.model.entity.Npc;
 import com.drzewek.wfrp_npc_generator.model.entity.Token;
-import com.drzewek.wfrp_npc_generator.model.entity.User;
 import com.drzewek.wfrp_npc_generator.model.response.ResponseObject;
-import com.drzewek.wfrp_npc_generator.repository.NpcRepository;
-import com.drzewek.wfrp_npc_generator.repository.UserRepository;
 import com.drzewek.wfrp_npc_generator.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
