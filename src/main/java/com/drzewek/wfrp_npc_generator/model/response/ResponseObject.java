@@ -8,12 +8,11 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder
 public class ResponseObject<T> {
 
-    private HttpStatus statusCode;
+    protected HttpStatus statusCode;
 
-    private String message;
+    protected String message;
 
-    private T object;
+    protected T object;
 }

@@ -36,9 +36,9 @@ public class BeanConfig {
     private AuthorizationFilter authorizationFilter;
 
     private static final String[] PUBLIC_ENDPOINTS = {"/user/register", "/user/verify",
-            "/auth/**", "/race/**", "/npc/generate", "/email-test/send"};
+            "/auth/**", "/race/**", "/npc/generate"};
 
-    private static final String[] USER_ENDPOINTS = {"/npc/**"};
+    private static final String[] USER_ENDPOINTS = {"/npc/auth/**", "/user/auth/**"};
     @Bean
     public Random random() {
         return new Random();
@@ -51,7 +51,6 @@ public class BeanConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //TODO change this so that only ADMIN users can access H2 console
         http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)

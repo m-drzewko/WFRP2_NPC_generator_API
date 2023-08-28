@@ -23,4 +23,14 @@ public class NpcController {
         //TODO change request type to GET?
         return new ResponseObject<>(HttpStatus.ACCEPTED, "Returning generated NPC", npcService.generateNpc(lang, race, gender));
     }
+
+    @PutMapping("auth/update/{id}")
+    public ResponseObject<NpcDto> updateNpc(@PathVariable Long id, @RequestBody NpcDto npc) {
+        return npcService.updateSavedNpc(id, npc);
+    }
+
+    @DeleteMapping("auth/delete/{id}")
+    public ResponseObject<Void> deleteNpc(@PathVariable Long id) {
+        return npcService.deleteSavedNpc(id);
+    }
 }

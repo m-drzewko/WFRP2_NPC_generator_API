@@ -20,6 +20,11 @@ public class Npc {
     @Setter(value = AccessLevel.PACKAGE)
     private Long id;
 
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private String name;
 
     @Enumerated(value = EnumType.STRING)
@@ -89,6 +94,7 @@ public class Npc {
         if (strengthBonus != npc.strengthBonus) return false;
         if (toughnessBonus != npc.toughnessBonus) return false;
         if (movement != npc.movement) return false;
+        if (!Objects.equals(user, npc.user)) return false;
         if (!Objects.equals(name, npc.name)) return false;
         if (gender != npc.gender) return false;
         if (!Objects.equals(race, npc.race)) return false;
@@ -98,7 +104,8 @@ public class Npc {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = user != null ? user.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (gender != null ? gender.hashCode() : 0);
         result = 31 * result + (race != null ? race.hashCode() : 0);
         result = 31 * result + height;

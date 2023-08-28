@@ -9,6 +9,8 @@ import lombok.*;
 @Builder
 public class NpcDto {
 
+    private long id;
+
     private String name;
 
     private String gender;

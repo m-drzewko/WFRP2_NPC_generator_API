@@ -21,10 +21,9 @@ public class RaceService {
 
     public List<RaceDto> getAllRaces() {
         log.trace("Returning all races");
-        List<RaceDto> listOfDtos = raceRepository.findAll().stream()
-                .map(race -> mapper.raceToDto(race))
+        return raceRepository.findAll().stream()
+                .map(mapper::raceToDto)
                 .collect(Collectors.toList());
-        return listOfDtos;
     }
 
     public Race saveNewRaceFromDto(RaceDto raceToSave) {
