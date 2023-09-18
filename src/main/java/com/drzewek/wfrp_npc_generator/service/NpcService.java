@@ -42,9 +42,9 @@ public class NpcService {
         if (raceName.equals(RANDOM) && gender.equals(RANDOM)) {
             generatedNpc = NpcUtility.generateNpc(lang, null, raceUtility.generateRace());
         } else if (raceName.equals(RANDOM)) {
-            if (gender.equals("male")) {
+            if (gender.equalsIgnoreCase("male")) {
                 generatedNpc = NpcUtility.generateNpc(lang, Gender.MALE, raceUtility.generateRace());
-            } else if (gender.equals("female")) {
+            } else if (gender.equalsIgnoreCase("female")) {
                 generatedNpc = NpcUtility.generateNpc(lang, Gender.FEMALE, raceUtility.generateRace());
             } else throw new EntityNotFoundException("Gender " + gender + " does not exist!");
         } else if (gender.equals(RANDOM)) {
@@ -58,9 +58,9 @@ public class NpcService {
             raceToFind = StringUtils.capitalize(raceToFind);
             Race raceToAssign = raceRepository.findByName(raceToFind)
                     .orElseThrow(() -> new EntityNotFoundException("Race " + raceName + " does not exist!"));
-            if (gender.equals("male")) {
+            if (gender.equalsIgnoreCase("male")) {
                 generatedNpc = NpcUtility.generateNpc(lang, Gender.MALE, raceToAssign);
-            } else if (gender.equals("female")) {
+            } else if (gender.equalsIgnoreCase("female")) {
                 generatedNpc = NpcUtility.generateNpc(lang, Gender.FEMALE, raceToAssign);
             } else throw new EntityNotFoundException("Gender " + gender + " does not exist!");
         }
