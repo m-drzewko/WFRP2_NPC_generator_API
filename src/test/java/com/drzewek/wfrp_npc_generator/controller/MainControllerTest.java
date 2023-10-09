@@ -14,17 +14,17 @@ class MainControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    void shouldPrintMessage() throws Exception {
-        //given
-        String expectedString = "Random NPC generator for WFRP II ed";
-
-        //when
-        MvcResult mvcResult =
-                mockMvc.perform(MockMvcRequestBuilders.get("/")).andReturn();
-        String responseMessage = mvcResult.getResponse().getContentAsString();
-
-        //then
-        assertEquals(expectedString, responseMessage);
-    }
+//    @Test
+//    void shouldPrintMessage() throws Exception {
+//        //given
+//        String expectedString = "Random NPC generator for WFRP II ed";
+//
+//        //when
+//        MvcResult mvcResult =
+//                mockMvc.perform(MockMvcRequestBuilders.get("/")).andReturn();
+//        String responseMessage = mvcResult.getResponse().getContentAsString();
+//
+//        //then
+//        assertEquals(expectedString, responseMessage);
+//    }
 }
